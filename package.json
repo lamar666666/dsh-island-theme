@@ -8,7 +8,7 @@
   "homepage": "https://github.com/lamar666666/dsh-island-theme",
   "main": "./index.mjs",
   "exports": {".": "./index.mjs", "./client": {"default": "./client.js"}, "./package.json": "./package.json"},
-  "files": ["index.mjs", "client.js", "theme.css", "workbench.css", "interactions.css", "cordis.patch.yml", "README.md", "README.zh-CN.md", "LICENSE", "CHANGELOG.md"],
+  "files": ["index.mjs", "client.js", "theme.css", "workbench.css", "interactions.css", "cordis.patch.yml", "README.md", "README.en.md", "LICENSE", "CHANGELOG.md"],
   "dsh": {"bundle": {"patch": "./cordis.patch.yml"}, "client": {"inject": ["@deepseek-ai/dsh-client-ui-model-selection", "@deepseek-ai/dsh-client-ui-workspace"], "platform": "web"}},
   "scripts": {"build": "node scripts/build-client.mjs", "pretest": "npm run build", "test": "node --test test.mjs layout.test.mjs interactions.test.mjs", "prepack": "npm run build", "pack:check": "npm pack --dry-run --ignore-scripts"},
   "devDependencies": {"jsdom": "26.1.0"},
