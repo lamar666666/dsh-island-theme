@@ -93,9 +93,9 @@ export function installIslandInteractions(d, w, options = {}) {
     const value = node('output', 'island-effort-value');
     const model=node('button','island-effort-model',d.querySelector('.wq12jW_triggerLabel')?.textContent?.trim() || (zh()?'推理等级':'Reasoning effort'));
     model.type='button';model.setAttribute('aria-label',zh()?'返回模型菜单':'Back to model menu');
-    const back=node('button','island-effort-back');back.type='button';
-    back.setAttribute('aria-label',zh()?'返回模型菜单':'Back to model menu');
-    center.append(value,model);header.append(center,back);
+    const reset=node('button','island-effort-reset');reset.type='button';
+    reset.setAttribute('aria-label',zh()?'重置为默认推理等级':'Reset to default reasoning effort');
+    center.append(value,model);header.append(center,reset);
     const range = node('input', 'island-effort-range');
     range.type = 'range'; range.min = '0'; range.max = String(data.buttons.length - 1); range.step = '1';
     range.setAttribute('aria-label', zh() ? '推理等级' : 'Reasoning effort');
@@ -189,6 +189,7 @@ export function installIslandInteractions(d, w, options = {}) {
       if (range.disabled!==disabled) range.disabled=disabled;
       const ariaDisabled=String(busy||disabled);
       if (range.getAttribute('aria-disabled')!==ariaDisabled) range.setAttribute('aria-disabled',ariaDisabled);
+      if (reset.getAttribute('aria-disabled')!==ariaDisabled) reset.setAttribute('aria-disabled',ariaDisabled);
       Array.from(ticks.children).forEach((tick, i) => {
         const disabled=busy || record.buttons[i].disabled || record.buttons[i].getAttribute('aria-disabled') === 'true';
         if (tick.disabled!==disabled) tick.disabled=disabled;
@@ -207,7 +208,27 @@ export function installIslandInteractions(d, w, options = {}) {
       restore(record);records.delete(menu);
       native?.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',code:'Escape',bubbles:true,cancelable:true}));
     };
-    back.addEventListener('click',goBack);model.addEventListener('click',goBack);
+    const resetToDefault = () => {
+      cancelDrag();
+      // Without the save service only an explicit first "Default" row can reset.
+      const nativeReset=()=>{if(record.labels[0]==='Default')commit(0);else{record.previewing=false;paint(selected());}};
+      if (disposed || !menu.isConnected || !root.isConnected || isBusy()) { record.previewing=false; paint(selected()); return; }
+      if (typeof options.commitEffort!=='function') { nativeReset(); return; }
+      record.saving=true;record.awaitingCommit=true;record.sawBusy=false;record.update();
+      Promise.resolve().then(()=>options.commitEffort({index:-1,labels:record.labels.slice()})).then(result=>{
+        if (disposed || !menu.isConnected || !root.isConnected) return;
+        record.saving=false;
+        if (result?.handled===false) {nativeReset();return;}
+        record.previewing=false;record.awaitingCommit=false;record.update();
+        if (!result?.ok) { setText(value,zh()?'保存失败，请重试':'Could not save; retry');value.setAttribute('role','status'); }
+      }).catch(()=>{
+        record.saving=false;
+        if (disposed || !root.isConnected) return;
+        record.previewing=false;record.awaitingCommit=false;record.update();
+        setText(value,zh()?'保存失败，请重试':'Could not save; retry');value.setAttribute('role','status');
+      });
+    };
+    reset.addEventListener('click',resetToDefault);model.addEventListener('click',goBack);
     track.append(fill,ticks,range,handle);root.append(header,track);menu.append(root);
     // Move focus within the same native menu before its old options are concealed.
     if (record.focusWasInside) range.focus({preventScroll:true});

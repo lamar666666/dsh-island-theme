@@ -1,4 +1,4 @@
-/** Use the host's shared model-selection service without its menu-close callback. */
+/** Use the host's shared model-selection service without its menu-close callback. index -1 resets to the catalog default. */
 export function createEffortCommitter(scope, d) {
   return async request => {
     const sessionId=scope.uiWorkspace.mainReference?.sessionId;
@@ -10,7 +10,7 @@ export function createEffortCommitter(scope, d) {
     const reasoning=model?.reasoning;
     if (!reasoning || !Array.isArray(reasoning.efforts)) return {handled:false};
     const offset=reasoning.defaultEffort===undefined?1:0;
-    if (request.labels.length!==reasoning.efforts.length+offset || reasoning.efforts.some((level,i)=>level.name!==request.labels[i+offset]) || !Number.isInteger(request.index) || request.index<0 || request.index>=request.labels.length) return {handled:false};
+    if (request.labels.length!==reasoning.efforts.length+offset || reasoning.efforts.some((level,i)=>level.name!==request.labels[i+offset]) || !Number.isInteger(request.index) || request.index<-1 || request.index>=request.labels.length) return {handled:false};
     const effort=request.index<offset?undefined:reasoning.efforts[request.index-offset].id;
     const selection={provider:current.provider,model:current.model,...effort===undefined?{}:{reasoningEffort:effort}};
     const result=await directory.select(selection);

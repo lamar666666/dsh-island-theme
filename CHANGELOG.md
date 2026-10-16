@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+
+- Turn the corner button into a real reset: it saves the model's catalog
+  default effort through the host service and keeps the pane open.
+- Leave the pane through the model-name link or Escape as before.
+
 ## 1.3.2
 
 - Remove the decorative lightning glyph from the reasoning pane header.

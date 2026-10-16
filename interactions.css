@@ -1,4 +1,4 @@
-/* ISLAND interactions 1.3.2 */
+/* ISLAND interactions 1.4.0 */
 body .hIlkoa_sessionRow {
   position: relative;
   min-height: 40px; height: 40px;
@@ -51,9 +51,9 @@ body .island-effort-center { min-width: 0; padding: 0 24px; box-sizing: border-b
 body .island-effort-value { display: block; color: var(--island-moss); padding: 1px 0; font-size: 16px; line-height: 22px; font-weight: 600; }
 body .island-effort-model { display: block; max-width: 100%; margin: 2px auto 0; padding: 0; border: 0; background: transparent; color: var(--island-muted); font: inherit; font-size: 12px; line-height: 18px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 body .island-effort-model::after { content: " ›"; }
-body .island-effort-back { position: absolute; top: 0; right: 0; width: 24px; height: 24px; padding: 3px; border: 0; background: transparent; cursor: pointer; border-radius: 6px; }
-body .island-effort-back::before { content: ""; display: block; width: 16px; height: 16px; background: var(--island-caption); mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3%205a5%205%200%201%201-1%205M3%202v4h4%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E") center / contain no-repeat; }
-body .island-effort-back:hover { background: var(--island-hover); }
+body .island-effort-reset { position: absolute; top: 0; right: 0; width: 24px; height: 24px; padding: 3px; border: 0; background: transparent; cursor: pointer; border-radius: 6px; }
+body .island-effort-reset::before { content: ""; display: block; width: 16px; height: 16px; background: var(--island-caption); mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3%205a5%205%200%201%201-1%205M3%202v4h4%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E") center / contain no-repeat; }
+body .island-effort-reset:hover { background: var(--island-hover); }
 body .island-effort-track { position: relative; height: 24px; margin-top: 15px; border-radius: 999px; corner-shape: round; background: color-mix(in srgb,var(--island-surface) 60%,var(--island-line)); box-shadow: inset 0 0 0 1px #50643308; }
 body .island-effort-fill { pointer-events: none; position: absolute; inset: 0 auto 0 0; width: var(--island-effort-position); border-radius: 999px; corner-shape: round; background: linear-gradient(100deg,color-mix(in srgb,var(--island-lime) 70%,var(--island-moss)),color-mix(in srgb,var(--island-lime) 38%,var(--island-moss))); transition: width 180ms cubic-bezier(.22,.7,.2,1); }
 body .island-effort-range {
@@ -75,7 +75,8 @@ body .island-effort-dragging .island-effort-handle { transform: translate(-50%,-
 body .island-effort-ticks { pointer-events: none; position: absolute; z-index: 2; top: 50%; left: 14px; right: 14px; transform: translateY(-50%); display: flex; justify-content: space-between; }
 body .island-effort-tick { pointer-events: none; width: 4px; height: 4px; min-width: 4px; border: 0; border-radius: 50%; corner-shape: round; background: var(--island-caption); font-size: 0; padding: 0; opacity: .28; }
 body .island-effort-tick-active { background: #fff; opacity: .8; }
-body .island-effort-range:disabled, body .island-effort-tick:disabled { opacity: .45; cursor: not-allowed; }
+body .island-effort-range:disabled, body .island-effort-tick:disabled,
+body .island-effort-reset[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
 @keyframes island-preview-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) {
   body .island-title-preview { animation: none; }

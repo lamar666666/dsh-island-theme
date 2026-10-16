@@ -21,7 +21,7 @@ test('generated client owns its live stylesheet and removes it on disposal', () 
   try {
     runInContext(readFileSync(new URL('./client.js',import.meta.url),'utf8'),dom.getInternalVMContext());
     const style=dom.window.document.querySelector('[data-plugin-css="island-theme-live"]');
-    assert(style);assert(style.textContent.includes('ISLAND interactions 1.3.2'));
+    assert(style);assert(style.textContent.includes('ISLAND interactions 1.4.0'));
     dispose();assert.equal(dom.window.document.querySelector('[data-plugin-css="island-theme-live"]'),null);
     assert.equal(dom.window.document.body.classList.contains('island-interactions-active'),false);
   } finally {dispose?.();dom.window.close();}
@@ -68,7 +68,7 @@ test('attaching and leaving the effort pane asks the host to re-place the menu',
   } finally {env.close();}
 });
 
-test('back control restores native rows before Escape leaves the pane', async () => {
+test('model link restores native rows before Escape leaves the pane', async () => {
   const env=environment(pane());
   try {
     await delay(35);
@@ -82,10 +82,35 @@ test('back control restores native rows before Escape leaves the pane', async ()
       // Simulate the host swapping the effort rows for its root cells.
       menu.innerHTML='<button role="menuitem">Model</button><button role="menuitem">Effort</button>';
     }});
-    env.document.querySelector('.island-effort-back').click();
+    env.document.querySelector('.island-effort-model').click();
     assert(escaped,'Escape reaches the host menu');
     await delay(35);
     assert.equal(env.document.querySelector('.island-effort-range'),null,'no re-attach on a leaving pane');
+  } finally {env.close();}
+});
+
+test('reset control asks the service for the catalog default', async () => {
+  let request;
+  const env=environment(pane(),{commitEffort:args=>{request=args;
+    const native=env.document.querySelectorAll('[role=menuitemradio]');
+    native.forEach((button,i)=>button.setAttribute('aria-checked',String(i===1)));
+    return Promise.resolve({handled:true,ok:true});}});
+  try {
+    await delay(35);
+    env.document.querySelector('.island-effort-reset').click();
+    await delay(35);
+    assert.deepEqual(request,{index:-1,labels:['Basic','Deep','Maximum']});
+    assert.equal(env.document.querySelector('.island-effort-range').value,'1');
+  } finally {env.close();}
+});
+
+test('reset falls back to a visible Default row without the save service', async () => {
+  const env=environment('<div class="wq12jW_menu" role="menu"><button role="menuitemradio" aria-checked="false">Default</button><button role="menuitemradio" aria-checked="true">Low</button><button role="menuitemradio" aria-checked="false">High</button></div>');
+  try {
+    await delay(35);
+    let clicks=0; env.document.querySelector('[role=menuitemradio]').addEventListener('click',()=>clicks++);
+    env.document.querySelector('.island-effort-reset').click();
+    assert.equal(clicks,1,'first Default row receives the click');
   } finally {env.close();}
 });
 
@@ -98,8 +123,11 @@ test('host service saves the actual catalog effort without invoking a close call
     const save=createEffortCommitter(scope,dom.window.document);
     assert.deepEqual(await save({index:2,labels:['Basic','Deep','Maximum']}),{handled:true,ok:true});
     assert.deepEqual(calls,[{provider:'provider',model:'model',reasoningEffort:'max'}]);
+    assert.deepEqual(await save({index:-1,labels:['Basic','Deep','Maximum']}),{handled:true,ok:true});
+    assert.deepEqual(calls[1],{provider:'provider',model:'model'},'index -1 omits reasoningEffort so the catalog default applies');
     assert.deepEqual(await save({index:0,labels:['wrong']}),{handled:false});
-    assert.equal(calls.length,1);
+    assert.deepEqual(await save({index:-2,labels:['Basic','Deep','Maximum']}),{handled:false});
+    assert.equal(calls.length,2);
   } finally {dom.window.close();}
 });
 
