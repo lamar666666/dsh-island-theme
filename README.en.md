@@ -4,6 +4,8 @@
 
 A small, offline theme plugin: warm paper, moss and lime in light mode, forest surfaces in dark mode, and a more readable conversation workbench.
 
+![ISLAND theme in light mode](docs/images/preview.png)
+
 ## Features
 
 - Wider conversation/composer defaults, preserving native width adjustment.

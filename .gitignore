@@ -11,3 +11,4 @@ docs/plans/
 !.env.example
 .DS_Store
 Thumbs.db
+!docs/images/*.png
