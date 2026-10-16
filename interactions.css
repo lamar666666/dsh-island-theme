@@ -1,4 +1,4 @@
-/* ISLAND interactions 1.4.0 */
+/* ISLAND interactions 1.4.1 */
 body .hIlkoa_sessionRow {
   position: relative;
   min-height: 40px; height: 40px;
@@ -44,6 +44,8 @@ body .island-title-preview-heading { font-size: 14px; line-height: 1.65; font-we
 body .island-title-preview-meta { display: flex; gap: 18px; justify-content: space-between; margin-top: 9px; color: var(--island-muted); font-size: 12px; overflow-wrap: anywhere; }
 
 body .island-effort-enhanced { width: min(288px, calc(100vw - 32px)); min-width: 0; box-sizing: border-box; padding: 13px 14px 15px; border-radius: 16px; }
+/* Native effort radios stay hidden even if the host rewrites their className. */
+body .island-effort-enhanced > button[role="menuitemradio"],
 body .island-native-effort-choice { display: none !important; }
 body .island-effort-control { --island-effort-position: 0%; min-width: 0; }
 body .island-effort-header { position: relative; }

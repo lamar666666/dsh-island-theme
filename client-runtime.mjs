@@ -183,6 +183,11 @@ export function installIslandInteractions(d, w, options = {}) {
       record.previewing=true;paint(index);commit(index);
     });
     record.update = () => {
+      // Re-assert our classes: host rerenders can rewrite className off the buttons.
+      if (record.root.isConnected) {
+        if (!menu.classList.contains('island-effort-enhanced')) menu.classList.add('island-effort-enhanced');
+        for (const button of record.buttons) if (!button.classList.contains('island-native-effort-choice')) button.classList.add('island-native-effort-choice');
+      }
       const busy=isBusy(), current=selected();
       // Disabling a focused range blurs/closes the host menu. Expose busy via ARIA.
       const disabled=!busy && record.buttons.every(button => button.disabled);

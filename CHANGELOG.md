@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1
+
+- Keep native effort rows hidden when the host rewrites their className:
+  conceal them through the enhanced menu's stable class and role selector,
+  and re-assert both classes on every refresh.
+
 ## 1.4.0
 
 - Turn the corner button into a real reset: it saves the model's catalog
