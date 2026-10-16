@@ -21,7 +21,7 @@ test('generated client owns its live stylesheet and removes it on disposal', () 
   try {
     runInContext(readFileSync(new URL('./client.js',import.meta.url),'utf8'),dom.getInternalVMContext());
     const style=dom.window.document.querySelector('[data-plugin-css="island-theme-live"]');
-    assert(style);assert(style.textContent.includes('ISLAND interactions 1.3.1'));
+    assert(style);assert(style.textContent.includes('ISLAND interactions 1.3.2'));
     dispose();assert.equal(dom.window.document.querySelector('[data-plugin-css="island-theme-live"]'),null);
     assert.equal(dom.window.document.body.classList.contains('island-interactions-active'),false);
   } finally {dispose?.();dom.window.close();}
@@ -49,6 +49,44 @@ test('slider derives arbitrary native levels and commits only on change', async 
 test('model-list radio options are not enhanced as reasoning levels', async () => {
   const env=environment(pane('group'));
   try {await delay(35);assert.equal(env.document.querySelector('.island-effort-range'),null);} finally {env.close();}
+});
+
+test('attaching and leaving the effort pane asks the host to re-place the menu', async () => {
+  const env=environment('');
+  try {
+    let resizes=0; env.window.addEventListener('resize',()=>resizes++);
+    env.document.body.insertAdjacentHTML('beforeend',pane());
+    await delay(35);
+    assert(env.document.querySelector('.island-effort-range'),'slider is mounted');
+    assert(resizes>=1,'attach asks the host to re-measure');
+    const menu=env.document.querySelector('.wq12jW_menu');
+    // The host swaps the effort rows for its root cells when leaving the pane.
+    menu.innerHTML='<button role="menuitem">Model</button><button role="menuitem">Effort</button>';
+    await delay(35);
+    assert.equal(env.document.querySelector('.island-effort-range'),null);
+    assert(resizes>=2,'restore asks the host to re-measure');
+  } finally {env.close();}
+});
+
+test('back control restores native rows before Escape leaves the pane', async () => {
+  const env=environment(pane());
+  try {
+    await delay(35);
+    const menu=env.document.querySelector('.wq12jW_menu');
+    let escaped=false;
+    menu.addEventListener('keydown',event=>{if(event.key==='Escape'){
+      escaped=true;
+      // By the time Escape bubbles the pane must look fully native again.
+      assert.equal(env.document.querySelector('.island-effort-range'),null);
+      assert.equal(menu.classList.contains('island-effort-enhanced'),false);
+      // Simulate the host swapping the effort rows for its root cells.
+      menu.innerHTML='<button role="menuitem">Model</button><button role="menuitem">Effort</button>';
+    }});
+    env.document.querySelector('.island-effort-back').click();
+    assert(escaped,'Escape reaches the host menu');
+    await delay(35);
+    assert.equal(env.document.querySelector('.island-effort-range'),null,'no re-attach on a leaving pane');
+  } finally {env.close();}
 });
 
 test('host service saves the actual catalog effort without invoking a close callback', async () => {

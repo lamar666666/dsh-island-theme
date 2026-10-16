@@ -73,6 +73,9 @@ export function installIslandInteractions(d, w, options = {}) {
     if (record.menu.isConnected && record.focusWasInside && d.activeElement === d.body) {
       record.buttons.find(button => button.getAttribute('aria-checked') === 'true')?.focus({preventScroll:true});
     }
+    // The host places the open menu once per pane/state change. Our geometry
+    // changes never reach it, so ask for a re-measure through its own listener.
+    w.dispatchEvent(new w.Event('resize'));
   }
   function discover(menu) {
     if (menu.getAttribute('role') !== 'menu') return null;
@@ -86,14 +89,13 @@ export function installIslandInteractions(d, w, options = {}) {
   function attach(menu, data) {
     const root = node('div', 'island-effort-control');
     const header = node('div', 'island-effort-header');
-    const icon=node('span','island-effort-lightning');icon.setAttribute('aria-hidden','true');
     const center=node('div','island-effort-center');
-    const value = node('output', 'island-effort-value'); header.append(value);
+    const value = node('output', 'island-effort-value');
     const model=node('button','island-effort-model',d.querySelector('.wq12jW_triggerLabel')?.textContent?.trim() || (zh()?'推理等级':'Reasoning effort'));
     model.type='button';model.setAttribute('aria-label',zh()?'返回模型菜单':'Back to model menu');
     const back=node('button','island-effort-back');back.type='button';
     back.setAttribute('aria-label',zh()?'返回模型菜单':'Back to model menu');
-    center.append(value,model);header.append(icon,center,back);
+    center.append(value,model);header.append(center,back);
     const range = node('input', 'island-effort-range');
     range.type = 'range'; range.min = '0'; range.max = String(data.buttons.length - 1); range.step = '1';
     range.setAttribute('aria-label', zh() ? '推理等级' : 'Reasoning effort');
@@ -201,6 +203,8 @@ export function installIslandInteractions(d, w, options = {}) {
     const goBack = () => {
       cancelDrag();
       const native=record.buttons.find(button=>button.isConnected);
+      // Detach before the host swaps panes, or its layout pass measures our card.
+      restore(record);records.delete(menu);
       native?.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',code:'Escape',bubbles:true,cancelable:true}));
     };
     back.addEventListener('click',goBack);model.addEventListener('click',goBack);
@@ -212,6 +216,7 @@ export function installIslandInteractions(d, w, options = {}) {
       button.classList.add('island-native-effort-choice'); button.tabIndex = -1;
     }
     menu.classList.add('island-effort-enhanced'); record.update();
+    w.dispatchEvent(new w.Event('resize'));
     return record;
   }
   function sync() {

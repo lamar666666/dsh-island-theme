@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.2
+
+- Remove the decorative lightning glyph from the reasoning pane header.
+- Re-place the host menu after the slider card attaches or detaches, so the
+  model list no longer lands at the coordinates measured while the card was
+  still mounted. Back navigation restores native rows before Escape.
+
 ## 1.3.1
 
 - Refine the reasoning rail into a soft capsule with a truly circular white handle, subtle markers and coordinated motion.
