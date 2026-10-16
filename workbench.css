@@ -1,0 +1,124 @@
+/* ISLAND workbench 1.2.0. Selectors verified on Harness 0.2.0-rc.2. */
+body .Dc7zOa_body:not(.Dc7zOa_embeddedBody) {
+  --dsh-chat-content-width: var(--dsh-chat-user-width, clamp(680px, calc(var(--dsh-conversation-column-width, 0px) * .86), 1440px));
+  --dsh-composer-card-max-width: var(--dsh-chat-content-width);
+  --dsh-composer-side-clearance: 32px;
+}
+/* Match the transcript's clearance to the composer, including narrow panes. */
+body .xz4KEq_scroll { padding: 28px var(--dsh-composer-side-clearance, 32px) 24px; }
+body .xz4KEq_column, body .xz4KEq_flowItem, body .v5IAXa_root,
+body .v5IAXa_body, body .RlGAzG_root { min-width: 0; }
+body .xz4KEq_column { gap: 2px; }
+body .Dc7zOa_header { border-bottom: 1px solid var(--island-line); }
+body .Dc7zOa_crumbCurrent { font-size: 16px; font-weight: 600; }
+body .Dc7zOa_tab { font-size: 14px; }
+body ._markdown_1ypvv_5 { font-size: calc(var(--dsh-content-font-size, 14px) + 1px); line-height: 1.9; }
+body ._markdown_1ypvv_5 h1 { font-size: 1.8em; line-height: 1.45; }
+body ._markdown_1ypvv_5 h2 { font-size: 1.55em; line-height: 1.5; margin-block: 26px 14px; }
+body ._markdown_1ypvv_5 h3 { font-size: 1.3em; line-height: 1.55; margin-block: 22px 12px; }
+body ._markdown_1ypvv_5 li { margin-block: 5px; }
+body ._markdown_1ypvv_5 blockquote {
+  border-left: 3px solid var(--island-moss);
+  border-radius: 0 10px 10px 0;
+  background: var(--island-subtle);
+  color: var(--island-muted);
+  padding: 12px 16px;
+}
+
+/* Preserve syntax colors and diff semantics; long lines scroll within code. */
+body .md-code-block pre, body .md-code-block pre code {
+  font-size: max(14px, var(--dsh-content-font-size, 14px));
+  line-height: 1.75;
+  font-variant-ligatures: none;
+}
+body .md-code-block {
+  min-width: 0; max-width: 100%;
+  border: 1px solid var(--island-line);
+  border-radius: 14px;
+  background: var(--island-code);
+}
+body .md-code-block pre { max-width: 100%; overflow-x: auto; white-space: pre; }
+body ._markdown_1ypvv_5 :not(pre) > code {
+  font-size: .94em;
+  padding: .12em .35em;
+  border: 1px solid var(--island-line);
+  border-radius: 5px;
+}
+
+/* Natural-flow sidebar rows, with no fabricated subtitle content. */
+body .hIlkoa_sessionRow {
+  box-sizing: border-box; height: auto; min-height: 54px;
+  padding-block: 9px; margin-block: 4px; gap: 5px;
+}
+body .hIlkoa_sessionRow .hIlkoa_title, body .hIlkoa_projectRow .hIlkoa_title {
+  white-space: normal; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  line-height: 20px; max-height: 40px; overflow: hidden; mask-image: none;
+}
+body .hIlkoa_projectRow { height: auto; min-height: 42px; padding-block: 5px; }
+body .hIlkoa_sessionRow.hIlkoa_selected {
+  box-shadow: inset 3px 0 var(--island-moss); background: var(--island-selected);
+}
+body .hIlkoa_sessionRow.hIlkoa_selected .hIlkoa_title { font-weight: 600; }
+/* Empty native leading slots get a decorative bubble, never replacing run status. */
+body .hIlkoa_sessionRow .hIlkoa_slot:has(> [data-slot="sidebar.session.row.leading"]:empty)::before {
+  content: ""; width: 15px; height: 15px; flex-shrink: 0;
+  background: var(--island-muted);
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4%202.5h8a2%202%200%200%201%202%202v6a2%202%200%200%201-2%202H7l-4%202v-2a2%202%200%200%201-1-1.7V4.5a2%202%200%200%201%202-2Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.2%22%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+}
+body .hIlkoa_time { font-size: 10px; color: var(--island-caption); }
+body .hIlkoa_rowActions { gap: 7px; }
+
+/* Clearer grouping of original attachment, permission, model and send actions. */
+body .RlGAzG_card { gap: 10px; padding-top: 12px; }
+body .RlGAzG_scroll { min-height: 54px; }
+body .RlGAzG_row {
+  border-top: 1px solid var(--island-line); padding-top: 9px;
+  padding-bottom: 10px; gap: 12px;
+}
+body .RlGAzG_tools, body .RlGAzG_trailing,
+body .RlGAzG_standardControls { min-width: 0; gap: 9px; }
+body .RlGAzG_trailing { flex: 0 1 auto; }
+body .wq12jW_root { min-width: 0; }
+body .wq12jW_trigger {
+  min-height: 34px; height: auto;
+  border: 1px solid var(--island-line); border-radius: 9px;
+  background: var(--island-surface); padding: 4px 8px; gap: 8px;
+}
+body .wq12jW_triggerLabel { max-width: 260px; font-size: 12px; }
+body .wq12jW_triggerEffort {
+  flex-shrink: 0; color: var(--island-moss); font-size: 12px;
+  line-height: 20px; padding: 1px 9px;
+  background: var(--island-selected); border-radius: 999px;
+}
+body .RlGAzG_primary { width: 40px; height: 40px; flex-shrink: 0; transform: none; }
+
+/* Flatten noninteractive wrappers only: no React nodes are moved or replaced. */
+body .RlGAzG_dock {
+  width: 100%; max-width: var(--dsh-composer-card-max-width);
+  justify-content: flex-start; gap: 12px; flex-wrap: wrap;
+  padding: 7px 8px 2px; box-sizing: border-box;
+}
+body .RlGAzG_dock > div, body .RlGAzG_dock .iq1doa_root { display: contents; }
+body .RlGAzG_dock .iq1doa_anchor:first-child { order: 1; }
+body .RlGAzG_dock ._2WTFBq_root { order: 2; }
+body .RlGAzG_dock .iq1doa_anchor:nth-child(2) { order: 3; margin-left: auto; }
+/* Original text remains in the native button's accessible name and popup. */
+body .RlGAzG_dock .iq1doa_anchor:nth-child(2) .iq1doa_label { font-size: 0; }
+body .RlGAzG_dock .iq1doa_anchor:nth-child(2) .iq1doa_label::after {
+  content: "用量详情"; font-size: 12px; color: var(--island-muted);
+}
+html[lang^="en"] body .RlGAzG_dock .iq1doa_anchor:nth-child(2) .iq1doa_label::after { content: "Usage details"; }
+body .RlGAzG_dock .iq1doa_pill { min-height: 25px; }
+body .RlGAzG_dock .iq1doa_anchor:nth-child(2) .iq1doa_pill:hover { background: var(--island-hover); }
+
+@media (max-width: 1100px) {
+  body .RlGAzG_row { gap: 8px; }
+  body .RlGAzG_dock { gap: 7px; }
+}
+@media (max-width: 760px) {
+  body .RlGAzG_row { flex-wrap: wrap; }
+  body .RlGAzG_trailing { margin-left: auto; }
+  body .RlGAzG_dock .iq1doa_anchor { min-width: 0; }
+  body .RlGAzG_dock .iq1doa_pill { max-width: 100%; }
+}

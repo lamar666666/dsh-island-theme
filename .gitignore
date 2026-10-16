@@ -1,0 +1,13 @@
+node_modules/
+*.tgz
+*.log
+*.png
+*-verification.json
+PLAN.md
+docs/plans/
+验证与回滚.md
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

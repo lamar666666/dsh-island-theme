@@ -1,0 +1,153 @@
+/* ISLAND 1.0.1. Palette: my-blog. Layout selectors: Harness 0.2.0-rc.2. */
+html body {
+  --island-paper: #fafbf6;
+  --island-surface: #ffffff;
+  --island-subtle: #f2f5ec;
+  --island-sidebar: #f1f4e9;
+  --island-ink: #242a22;
+  --island-muted: #616b58;
+  --island-caption: #616b58;
+  --island-line: #e0e6d6;
+  --island-moss: #586f24;
+  --island-lime: #cef76c;
+  --island-lime-ink: #253319;
+  --island-selected: #e4edcf;
+  --island-hover: #eaf0df;
+  --island-code: #f3f5ee;
+  --island-shadow: 0 8px 32px #465d150c;
+  --island-elevation: 0 0 0 1px #465d1515, 0 12px 40px #465d1510;
+  --island-serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
+
+  --dsw-alias-bg-base: var(--island-paper) !important;
+  --dsw-alias-bg-layer-1: var(--island-surface) !important;
+  --dsw-alias-bg-layer-2: var(--island-surface) !important;
+  --dsw-alias-bg-layer-3: var(--island-surface) !important;
+  --dsw-alias-bg-module-platform: var(--island-subtle) !important;
+  --dsw-alias-bg-multi-select: var(--island-selected) !important;
+  --dsw-alias-bg-overlay: var(--island-subtle) !important;
+  --dsw-alias-bg-document-preview: var(--island-subtle) !important;
+  --dsw-alias-label-primary: var(--island-ink) !important;
+  --dsw-alias-label-primary-dimmed: var(--island-ink) !important;
+  --dsw-alias-label-secondary: var(--island-muted) !important;
+  --dsw-alias-label-tertiary: var(--island-caption) !important;
+  --dsw-alias-label-caption: var(--island-caption) !important;
+  --dsw-alias-label-document-preview: var(--island-muted) !important;
+  --dsw-alias-label-primary-bluish: var(--island-moss) !important;
+  --dsw-alias-brand-primary: var(--island-ink) !important;
+  --dsw-alias-brand-text: var(--island-ink) !important;
+  --dsw-alias-brand-primary-new-colorprimary-new-color: var(--island-moss) !important;
+  --dsw-alias-state-business-primary: var(--island-moss) !important;
+  --dsw-alias-state-business-tertiary: var(--island-selected) !important;
+  --dsw-alias-link: var(--island-moss) !important;
+  --dsw-focus-ring-color: var(--island-moss);
+  --dsw-alias-border-l1: var(--island-line) !important;
+  --dsw-alias-border-l2: var(--island-line) !important;
+  --dsw-alias-border-l2-darkmode-thin: var(--island-line) !important;
+  --dsw-alias-border-l3: var(--island-line) !important;
+  --dsw-alias-border-l4: var(--island-line) !important;
+  --dsw-alias-interactive-bg-hover: var(--island-hover) !important;
+  --dsw-alias-interactive-bg-hover-solid: var(--island-hover) !important;
+  --dsw-alias-interactive-bg-hover-accent: var(--island-selected) !important;
+  --dsw-alias-interactive-bg-active: var(--island-selected) !important;
+  --dsw-alias-button-info-fill: var(--island-moss) !important;
+  --dsw-alias-button-info-hover: var(--island-moss) !important;
+  --dsw-alias-button-elevated-fill: var(--island-surface) !important;
+  --dsw-alias-button-floating-fill: var(--island-surface) !important;
+  --dsw-alias-button-floating-hover: var(--island-hover) !important;
+  --dsw-alias-button-ghost-active-fill: var(--island-selected) !important;
+  --dsw-alias-button-ghost-active-border: var(--island-moss) !important;
+  --dsw-alias-button-ghost-active-hover: var(--island-hover) !important;
+  --dsw-alias-settings-card-fill: var(--island-surface) !important;
+  --dsw-alias-settings-card-stroke: var(--island-line) !important;
+  --dsw-alias-markdown-code-block: var(--island-code) !important;
+  --dsw-alias-markdown-code-block-banner: var(--island-subtle) !important;
+  --dsw-alias-markdown-inline-code: var(--island-code) !important;
+  --dsw-alias-markdown-tag: var(--island-subtle) !important;
+  --dsw-alias-markdown-citation: var(--island-selected) !important;
+  --dsw-alias-markdown-code-segment-selected: var(--island-surface) !important;
+  --dsw-alias-markdown-code-segment-unselected: var(--island-subtle) !important;
+  --dsw-alias-turn-trigger-bg: var(--island-subtle) !important;
+  --dsw-alias-turn-trigger-bg-hover: var(--island-hover) !important;
+  --dsw-alias-menu-icon: var(--island-muted) !important;
+  --dsw-alias-menu-group-header-fill: var(--island-surface) !important;
+  --dsw-specific-sidebar-fill: var(--island-sidebar) !important;
+  --dsw-specific-sidebar-nav-item-hover: var(--island-hover) !important;
+  --dsw-specific-sidebar-nav-item-active: var(--island-selected) !important;
+  --dsw-specific-sidebar-nav-item-active-accent: var(--island-selected) !important;
+  --dsw-specific-input-major: var(--island-surface) !important;
+  --dsw-specific-selector: var(--island-subtle) !important;
+  --dsw-specific-bubble: var(--island-subtle) !important;
+  --dsw-specific-bubble-highlight: var(--island-selected) !important;
+  --dsw-specific-menu: var(--island-surface) !important;
+  --dsw-menu-surface-fill: var(--island-surface) !important;
+  --dsw-elevation-stroke-color: var(--island-line) !important;
+  --dsw-elevation-panel: var(--island-elevation) !important;
+  --dsw-elevation-soft: var(--island-elevation) !important;
+  --dsw-elevation-prominent: var(--island-elevation) !important;
+  --dsw-shadow-lv2: var(--island-shadow) !important;
+  background-color: var(--island-paper);
+}
+
+html body[data-ds-dark-theme] {
+  --island-paper: #141814;
+  --island-surface: #1c211b;
+  --island-subtle: #252d22;
+  --island-sidebar: #181e16;
+  --island-ink: #f0f2e9;
+  --island-muted: #a4ae9d;
+  --island-caption: #9ba791;
+  --island-line: #343e2e;
+  --island-moss: #c1e775;
+  --island-selected: #344624;
+  --island-hover: #2a3523;
+  --island-code: #1a2017;
+  --island-shadow: 0 8px 32px #00000024;
+  --island-elevation: 0 0 0 1px #b3cc8220, 0 12px 40px #00000030;
+}
+
+/* Keep original layout/resizing, app drag regions and interaction semantics. */
+body .BynINW_sidebarCol { border-right: 1px solid var(--island-line); }
+body ._2H3hWW_root { background: var(--island-sidebar); }
+body ._2H3hWW_logoRow { border-bottom: 1px solid var(--island-line); margin: 0 16px 12px; padding-inline: 0; }
+body ._2H3hWW_brand { color: var(--island-moss); }
+body ._2H3hWW_newSession {
+  background: var(--island-lime);
+  color: var(--island-lime-ink);
+  border: 1px solid #9fca3d55;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px #87a7370b;
+}
+body ._2H3hWW_newSession:hover { background: #c2eb60; }
+body ._9lTDKa_list { padding-block: 6px; }
+body .Dc7zOa_composerHero { max-width: min(880px, 100%); }
+body .Dc7zOa_heroWorkspaceRow { margin-bottom: 16px; }
+body .RlGAzG_card {
+  border: 1px solid var(--island-line);
+  border-radius: 18px;
+  box-shadow: var(--island-elevation);
+  background: var(--island-surface);
+}
+body .RlGAzG_card:focus-within { border-color: var(--island-moss); }
+body .RlGAzG_primary:not(:disabled) { background: var(--island-lime); color: var(--island-lime-ink); }
+body .RlGAzG_primary:not(:disabled):hover { background: #c2eb60; }
+body .RlGAzG_input { line-height: 1.85; }
+body .Dc7zOa_composerHero h1,
+body .Hqq-bq_titleGroup > span:first-child,
+body .Dc7zOa_composerHero [class*="_welcomeTitle"],
+body .Dc7zOa_composerHero [class*="_heroTitle"] {
+  font-family: var(--island-serif);
+  font-weight: 600;
+  letter-spacing: .03em;
+  color: var(--island-ink);
+}
+body .Hqq-bq_titleGroup > span:first-child { font-size: 34px; line-height: 1.5; }
+body .Hqq-bq_previewBadge { color: var(--island-moss); border-color: var(--island-line); background: var(--island-subtle); }
+body pre, body code, body [class*="_terminal"] { font-variant-ligatures: none; }
+body .RlGAzG_card::selection, body #root ::selection { background: var(--island-selected); color: var(--island-ink); }
+@media (max-width: 1000px) {
+  body ._2H3hWW_logoRow { margin-inline: 10px; }
+  body .Dc7zOa_composerHero { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body ._2H3hWW_newSession, body .RlGAzG_card { transition: none; }
+}
