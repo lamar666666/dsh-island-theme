@@ -5,10 +5,11 @@
 暖白、苔绿、青柠配色，配套森林深色模式。同时提供更宽的对话区、可读代码、单行侧栏标题、更早的标题预览、可拖动的推理等级滑块、明亮启动片头和三款动画工作台皮肤。
 
 ![ISLAND 主题浅色模式效果](docs/images/preview.png)
+![启动片头：晨光浮岛 · 全息唤醒](docs/images/intro.webp)
 
 ## 能力与边界
 
-- 启动时播放约 3 秒的明亮片头（浮岛或岛灵主视觉，可在设置中切换），随后淡入工作台；提供“跳过片头”按钮，按 Esc 立即关闭；片头进度仅作装饰，不代表真实加载进度；系统开启“减少动效”时自动跳过。
+- 启动时播放约 3 秒的明亮科幻片头：浮岛穿光场现身、双扫描光束划过、轨道环与能量脉冲运转、粒子升腾、HUD 取景框随工作台显现收拢（浮岛或岛灵主视觉，可在设置中切换）；提供“跳过片头”按钮，按 Esc 立即关闭；片头进度仅作装饰，不代表真实加载进度；系统开启“减少动效”时自动跳过。
 - 三款工作台皮肤：晨光浮岛（默认）、浮岛夜航（加强轨道光效）、岛灵同行（昼色背景 + 岛灵小伙伴）。皮肤仅追加背景光轨、会话标记和输入框边缘等环境动效，聊天布局与交互区域不变；深色模式下自动切换夜间美术。
 - 皮肤与片头主视觉在 设置 → 内置插件 → ISLAND 主题 页签中切换，保存后立即生效并写入配置档案，重启后保留。
 - 美术资源全部内嵌在插件包内（本地 WebP，无外部图片请求），解码失败时回退纯 CSS 渐变。
@@ -30,7 +31,7 @@
 
 ```powershell
 $DshCli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
-& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.5.0.tgz'
+& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.0.tgz'
 ```
 
 自定义安装位置时，将 `$DshCli` 指向实际目录中的 `resources\runtime\cli\bin\dsh.cmd`。安装后打开 Harness，在设置中切换浅色、深色、跟随系统。

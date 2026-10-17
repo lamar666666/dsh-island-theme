@@ -1,6 +1,6 @@
 {
   "name": "dsh-island-theme",
-  "version": "1.5.3",
+  "version": "1.0.0",
   "description": "ISLAND — a warm, readable development workbench theme for DeepSeek Harness",
   "type": "module",
   "license": "MIT",

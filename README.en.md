@@ -5,10 +5,11 @@
 A small, offline theme plugin: warm paper, moss and lime in light mode, forest surfaces in dark mode, a more readable conversation workbench, a bright startup intro and three animated workbench skins.
 
 ![ISLAND theme in light mode](docs/images/preview.png)
+![Startup intro: Morning Island · Holo Awakening](docs/images/intro.webp)
 
 ## Features
 
-- A three-second bright startup intro (floating-island or island-spirit visual, switchable in settings) that fades into the workbench; a "跳过片头"/skip button and Escape dismiss it instantly; the progress line is decorative only and does not report real load state; `prefers-reduced-motion` bypasses it entirely.
+- A ~3s bright sci-fi startup intro — the island emerges through a light field, dual scan beams cross the scene, orbital rings and energy pulses stay in motion, particles rise, and the HUD frame closes as the workbench appears (floating-island or island-spirit visual, switchable in settings); a "跳过片头"/skip button and Escape dismiss it instantly; the progress line is decorative only and does not report real load state; `prefers-reduced-motion` bypasses it entirely.
 - Three workbench skins: Morning Island (default), Night Voyage (stronger orbital light trails) and Island Spirit (daylight backdrop plus the mascot companion). Skins only add ambient glows, orbit lines, an active-session marker and a composer edge animation — chat layout and interaction zones stay untouched; dark mode swaps in night artwork automatically.
 - Skin and intro visual are chosen under Settings → Built-in plugins → ISLAND 主题; changes apply immediately and persist in the profile.
 - All artwork is embedded in the package as local WebP — no external image requests; a pure-CSS gradient remains if decoding fails.
@@ -32,7 +33,7 @@ Download a release tarball or run `npm pack` on this source. Fully quit Harness 
 
 ```powershell
 $DshCli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
-& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.5.0.tgz'
+& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.0.tgz'
 ```
 
 For a custom installation, point `$DshCli` to that installation's `resources\runtime\cli\bin\dsh.cmd`. Reopen Harness; select light/dark/system in Settings → Appearance.
