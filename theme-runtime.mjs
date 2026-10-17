@@ -53,6 +53,19 @@ export function installIslandTheme(document, window, options = {}) {
       el('i', 'island-intro-orbit'),
       el('i', 'island-intro-orbit two'),
       el('div', 'island-intro-scan'),
+      el('div', 'island-intro-scan island-intro-scan--secondary'),
+      el('div', 'island-intro-energy'),
+      el('div', 'island-intro-reticle'),
+      (() => {
+        const particles = el('div', 'island-intro-particles');
+        for (let index = 0; index < 8; index += 1) {
+          const particle = el('i');
+          particle.style.setProperty('--particle-index', String(index));
+          particles.append(particle);
+        }
+        return particles;
+      })(),
+      el('div', 'island-intro-frame'),
     );
 
     const copy = el('div', 'island-intro-copy');
@@ -77,7 +90,7 @@ export function installIslandTheme(document, window, options = {}) {
     progress.append(el('i'));
     const skip = el('button', 'island-intro-skip', '跳过片头');
     skip.type = 'button';
-    bottom.append(progress, el('small', undefined, '01　02　03'), skip);
+    bottom.append(progress, el('small', undefined, 'ARRIVAL SEQUENCE · 00:06'), skip);
     overlay.append(bottom);
     return { overlay, skip };
   }
@@ -132,6 +145,7 @@ export function installIslandTheme(document, window, options = {}) {
     state.overlay.classList.add('island-intro--closing');
     state.removeTimer = window.setTimeout(() => {
       state.overlay.remove();
+      if (state.previousFocus?.isConnected) state.previousFocus.focus({ preventScroll: true });
       if (overlayState === state) overlayState = undefined;
     }, options.closeDuration ?? INTRO_CLOSE_MS);
   }
@@ -143,11 +157,32 @@ export function installIslandTheme(document, window, options = {}) {
     const { overlay, skip } = buildIntroOverlay(preferences.introVisual);
     const state = {
       overlay,
+      previousFocus: document.activeElement,
       closing: false,
       onKeydown: (event) => {
         if (event.key === 'Escape') {
           event.preventDefault();
           closeIntro();
+          return;
+        }
+        if (event.key === 'Tab') {
+          const focusable = Array.from(overlay.querySelectorAll('button:not(:disabled), a[href], input:not(:disabled), [tabindex]:not([tabindex="-1"])'))
+            .filter(element => element.getAttribute('aria-hidden') !== 'true');
+          const first = focusable[0];
+          const last = focusable.at(-1);
+          if (!first) {
+            event.preventDefault();
+            overlay.focus({ preventScroll: true });
+          } else if (!overlay.contains(document.activeElement)) {
+            event.preventDefault();
+            first.focus({ preventScroll: true });
+          } else if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus({ preventScroll: true });
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus({ preventScroll: true });
+          }
         }
       },
       autoTimer: undefined,
@@ -158,6 +193,7 @@ export function installIslandTheme(document, window, options = {}) {
     state.autoTimer = window.setTimeout(closeIntro, options.introDuration ?? INTRO_DURATION_MS);
     overlayState = state;
     body.append(overlay);
+    skip.focus({ preventScroll: true });
   }
 
   applyPreferences(preferences);
@@ -183,6 +219,7 @@ export function installIslandTheme(document, window, options = {}) {
         window.clearTimeout(state.removeTimer);
         window.removeEventListener('keydown', state.onKeydown, true);
         state.overlay.remove();
+        if (state.previousFocus?.isConnected) state.previousFocus.focus({ preventScroll: true });
         overlayState = undefined;
       }
       ambientNodes.forEach(node => node.remove());

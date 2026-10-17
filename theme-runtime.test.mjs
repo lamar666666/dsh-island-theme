@@ -49,6 +49,25 @@ test('mounts one intro overlay with the chosen visual and auto-closes it', async
   assert.equal(document.querySelector('.island-intro'), null);
 });
 
+test('uses a six-second default intro and mounts the continuous sci-fi sequence layers', async () => {
+  const { document, window } = setup();
+  const delays = [];
+  const nativeSetTimeout = window.setTimeout.bind(window);
+  window.setTimeout = (callback, delay, ...args) => {
+    delays.push(delay);
+    return nativeSetTimeout(callback, delay, ...args);
+  };
+  installIslandTheme(document, window, { closeDuration: 10 });
+  await flush();
+  const overlay = document.querySelector('.island-intro');
+  assert.ok(overlay);
+  assert.ok(delays.includes(6000), `expected six-second timer, got ${delays.join(', ')}`);
+  for (const cls of ['island-intro-scan', 'island-intro-scan island-intro-scan--secondary', 'island-intro-energy', 'island-intro-particles', 'island-intro-reticle']) {
+    assert.ok(overlay.querySelector(`.${cls.split(' ').join('.')}`), cls);
+  }
+  assert.equal(overlay.querySelector('.island-intro-progress i').style.animationDuration, '');
+});
+
 test('skip button and Escape close the intro immediately', async () => {
   const { document, window } = setup();
   installIslandTheme(document, window, FAST);
@@ -63,6 +82,25 @@ test('skip button and Escape close the intro immediately', async () => {
   window.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape' }));
   await sleep(30);
   assert.equal(document.querySelector('.island-intro'), null);
+});
+
+test('keeps keyboard focus inside the modal intro and restores the previous focus on close', async () => {
+  const { document, window } = setup();
+  const previous = document.createElement('button');
+  previous.textContent = 'Composer';
+  document.body.append(previous);
+  previous.focus();
+  installIslandTheme(document, window, { closeDuration: 10, introDuration: 1000 });
+  await flush();
+  const skip = document.querySelector('.island-intro-skip');
+  assert.equal(document.activeElement, skip);
+  const tab = new window.KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+  window.dispatchEvent(tab);
+  assert.equal(tab.defaultPrevented, true);
+  assert.equal(document.activeElement, skip);
+  window.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
+  await sleep(30);
+  assert.equal(document.activeElement, previous);
 });
 
 test('intro mounts at most once per window', async () => {

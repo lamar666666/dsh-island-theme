@@ -125,7 +125,7 @@ Expected: PASS for both persisted fields, transactional save, and write-error pr
 
 - [ ] **Step 1: Write failing DOM lifecycle tests**
 
-Add JSDOM tests for: default skin/intro selection; all three skins in both Harness light/dark modes; mascot retention in dark mode; one overlay per document session; a selectable island or mascot hero; automatic close after 1.8 seconds; Skip and Escape closing immediately; `prefers-reduced-motion` bypassing the animation; live setting updates; disposal removing overlay, timers, handlers, and `data-island-*` attributes.
+Add JSDOM tests for: default skin/intro selection; all three skins in both Harness light/dark modes; mascot retention in dark mode; one overlay per document session; a selectable island or mascot hero; automatic close after 6 seconds; Skip and Escape closing immediately; `prefers-reduced-motion` bypassing the animation; live setting updates; disposal removing overlay, timers, handlers, and `data-island-*` attributes.
 
 - [ ] **Step 2: Run the focused test and confirm it fails**
 
@@ -139,7 +139,7 @@ Update `scripts/build-client.mjs` to read each WebP from `assets/` and serialize
 
 - [ ] **Step 4: Implement config normalization and the startup lifecycle**
 
-Normalize only `day-island`, `night-island`, `island-mascot` and `island`, `mascot`; use defaults for unknown values. Mount a single accessible overlay, set a session guard, handle Skip and Escape, auto-remove at 1.8 seconds, bypass motion under reduced-motion preference, and restore all listeners and nodes on disposal.
+Normalize only `day-island`, `night-island`, `island-mascot` and `island`, `mascot`; use defaults for unknown values. Mount a single accessible overlay, set a session guard, handle Skip and Escape, auto-remove at 6 seconds, bypass motion under reduced-motion preference, and restore all listeners and nodes on disposal.
 
 - [ ] **Step 5: Apply the live skin to the workbench**
 
@@ -174,7 +174,7 @@ Expected: all interaction, layout, config, settings-page, and theme-runtime test
 
 - [ ] **Step 2: Document configuration and behavior**
 
-Update both READMEs with the Plugins → `dsh-island-theme` settings page, the three skin choices, the two intro variants, the 1.8-second default, Skip/Escape, reduced-motion behavior, and the fact that intro progress is decorative.
+Update both READMEs with the Plugins → `dsh-island-theme` settings page, the three skin choices, the two intro variants, the six-second default, Skip/Escape, reduced-motion behavior, and the fact that intro progress is decorative.
 
 - [ ] **Step 3: Bump and package version 1.5.0**
 
