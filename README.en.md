@@ -8,7 +8,7 @@ A small, offline theme plugin: warm paper, moss and lime in light mode, forest s
 
 ## Features
 
-- A six-second bright startup intro (floating-island or island-spirit visual, switchable in settings) that fades into the workbench; a "跳过片头"/skip button and Escape dismiss it instantly; the progress line is decorative only and does not report real load state; `prefers-reduced-motion` bypasses it entirely.
+- A three-second bright startup intro (floating-island or island-spirit visual, switchable in settings) that fades into the workbench; a "跳过片头"/skip button and Escape dismiss it instantly; the progress line is decorative only and does not report real load state; `prefers-reduced-motion` bypasses it entirely.
 - Three workbench skins: Morning Island (default), Night Voyage (stronger orbital light trails) and Island Spirit (daylight backdrop plus the mascot companion). Skins only add ambient glows, orbit lines, an active-session marker and a composer edge animation — chat layout and interaction zones stay untouched; dark mode swaps in night artwork automatically.
 - Skin and intro visual are chosen under Settings → Built-in plugins → ISLAND 主题; changes apply immediately and persist in the profile.
 - All artwork is embedded in the package as local WebP — no external image requests; a pure-CSS gradient remains if decoding fails.

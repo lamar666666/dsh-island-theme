@@ -49,7 +49,7 @@ test('mounts one intro overlay with the chosen visual and auto-closes it', async
   assert.equal(document.querySelector('.island-intro'), null);
 });
 
-test('uses a six-second default intro and mounts the continuous sci-fi sequence layers', async () => {
+test('uses a three-second default intro and mounts the continuous sci-fi sequence layers', async () => {
   const { document, window } = setup();
   const delays = [];
   const nativeSetTimeout = window.setTimeout.bind(window);
@@ -61,7 +61,7 @@ test('uses a six-second default intro and mounts the continuous sci-fi sequence 
   await flush();
   const overlay = document.querySelector('.island-intro');
   assert.ok(overlay);
-  assert.ok(delays.includes(6000), `expected six-second timer, got ${delays.join(', ')}`);
+  assert.ok(delays.includes(3000), `expected three-second timer, got ${delays.join(', ')}`);
   for (const cls of ['island-intro-scan', 'island-intro-scan island-intro-scan--secondary', 'island-intro-energy', 'island-intro-particles', 'island-intro-reticle']) {
     assert.ok(overlay.querySelector(`.${cls.split(' ').join('.')}`), cls);
   }

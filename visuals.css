@@ -231,7 +231,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   background-position: center 53%;
   mask-image: linear-gradient(180deg, #000 0 78%, transparent 100%);
   transform-origin: 68% 52%;
-  animation: island-intro-zoom 6s cubic-bezier(.2, .75, .25, 1) both;
+  animation: island-intro-zoom 3s cubic-bezier(.2, .75, .25, 1) both;
 }
 .island-intro-halo {
   position: absolute;
@@ -290,7 +290,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   background: linear-gradient(90deg, transparent, rgb(234 255 191 / .44), rgb(255 255 255 / .96), rgb(117 208 192 / .62), transparent);
   filter: blur(3px) drop-shadow(0 0 12px rgb(176 225 93 / .6));
   transform: skewX(-13deg) translateX(-55vw);
-  animation: island-intro-scan 5.6s cubic-bezier(.3, .65, .28, 1) .15s both;
+  animation: island-intro-scan 2.8s cubic-bezier(.3, .65, .28, 1) .1s both;
   mix-blend-mode: screen;
 }
 .island-intro-scan--secondary {
@@ -299,7 +299,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   width: 28px;
   filter: blur(2px) drop-shadow(0 0 9px rgb(121 202 188 / .55));
   opacity: .75;
-  animation: island-intro-scan-secondary 4.8s cubic-bezier(.32, .6, .23, 1) .65s both;
+  animation: island-intro-scan-secondary 2.4s cubic-bezier(.32, .6, .23, 1) .35s both;
 }
 .island-intro-energy {
   position: absolute;
@@ -313,7 +313,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   opacity: 0;
   transform: translate(50%, -50%) scale(.16);
   box-shadow: inset 0 0 32px rgb(204 241 136 / .12), 0 0 24px rgb(146 211 133 / .16);
-  animation: island-intro-energy 5.9s cubic-bezier(.18, .65, .22, 1) both;
+  animation: island-intro-energy 2.95s cubic-bezier(.18, .65, .22, 1) both;
 }
 .island-intro-energy::before,
 .island-intro-energy::after {
@@ -342,7 +342,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   border-radius: 50%;
   opacity: 0;
   box-shadow: 0 0 0 8px rgb(127 205 184 / .12), 0 0 18px rgb(115 191 171 / .5);
-  animation: island-intro-lock 6s ease-in-out both;
+  animation: island-intro-lock 3s ease-in-out both;
 }
 .island-intro-reticle::before,
 .island-intro-reticle::after {
@@ -380,7 +380,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
     linear-gradient(#8bad5c, #8bad5c) left bottom / 1px 28px no-repeat,
     linear-gradient(#8bad5c, #8bad5c) right bottom / 28px 1px no-repeat,
     linear-gradient(#8bad5c, #8bad5c) right bottom / 1px 28px no-repeat;
-  animation: island-intro-frame 6s ease-in-out both;
+  animation: island-intro-frame 3s ease-in-out both;
 }
 .island-intro-copy {
   position: absolute;
@@ -401,7 +401,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   transform-origin: left;
   background: linear-gradient(90deg, #a5c858, #83cabc 65%, transparent);
   box-shadow: 0 0 9px rgb(130 197 167 / .46);
-  animation: island-intro-copy-beam 6s cubic-bezier(.2, .7, .2, 1) both;
+  animation: island-intro-copy-beam 3s cubic-bezier(.2, .7, .2, 1) both;
 }
 .island-intro-kicker {
   color: #637d3f;
@@ -416,7 +416,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   font-size: clamp(30px, 4.4vw, 56px);
   line-height: 1.4;
   letter-spacing: .08em;
-  animation: island-intro-title-charge 6s ease-in-out both;
+  animation: island-intro-title-charge 3s ease-in-out both;
 }
 .island-intro-title em { font-style: normal; color: #66882e; }
 .island-intro-sub {
@@ -444,7 +444,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
 .island-intro[data-visual="mascot"] .island-intro-pet {
   opacity: 1;
   transform: translateY(0) scale(1);
-  animation: island-intro-pet-arrival 6s cubic-bezier(.2, .8, .2, 1) both, island-pet-float 3.2s ease-in-out .7s infinite;
+  animation: island-intro-pet-arrival 3s cubic-bezier(.2, .8, .2, 1) both, island-pet-float 3.2s ease-in-out .7s infinite;
 }
 .island-intro-chip {
   position: absolute;
@@ -484,7 +484,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   background: linear-gradient(90deg, #9dc54e, #d6f17e, #79c9b8);
   transform: scaleX(0);
   transform-origin: left;
-  animation: island-intro-progress 6s linear both;
+  animation: island-intro-progress 3s linear both;
 }
 .island-intro-bottom small {
   color: #758266;

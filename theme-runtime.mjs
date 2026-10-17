@@ -14,7 +14,7 @@ export function installIslandTheme(document, window, options = {}) {
   const SKINS = ['day-island', 'night-island', 'island-mascot'];
   const INTRO_VISUALS = ['island', 'mascot'];
   const DEFAULTS = { skin: 'day-island', introVisual: 'island' };
-  const INTRO_DURATION_MS = 6000;
+  const INTRO_DURATION_MS = 3000;
   const INTRO_CLOSE_MS = 260;
 
   function normalize(raw) {
@@ -90,7 +90,7 @@ export function installIslandTheme(document, window, options = {}) {
     progress.append(el('i'));
     const skip = el('button', 'island-intro-skip', '跳过片头');
     skip.type = 'button';
-    bottom.append(progress, el('small', undefined, 'ARRIVAL SEQUENCE · 00:06'), skip);
+    bottom.append(progress, el('small', undefined, 'ARRIVAL SEQUENCE · 00:03'), skip);
     overlay.append(bottom);
     return { overlay, skip };
   }

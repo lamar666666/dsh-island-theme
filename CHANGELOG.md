@@ -2,7 +2,7 @@
 
 ## 1.5.2
 
-- Redesign the startup intro as a continuous six-second bright sci-fi sequence: the island emerges through a light field, dual scan beams cross the scene, orbital rings and energy pulses stay in motion, particles rise, and the HUD frame closes as the workbench appears. Keep the island and mascot hero choices, Skip/Escape and reduced-motion behavior.
+- Redesign the startup intro as a continuous three-second bright sci-fi sequence: the island emerges through a light field, dual scan beams cross the scene, orbital rings and energy pulses stay in motion, particles rise, and the HUD frame closes as the workbench appears. Keep the island and mascot hero choices, Skip/Escape and reduced-motion behavior.
 
 ## 1.5.1
 
