@@ -11,7 +11,7 @@ test('wider default keeps the native user width override', () => {
 test('workbench uses native controls without replacing transcript data', async () => {
   const { apply } = await import('./index.mjs');
   let inject;
-  apply({on(_, cb){inject=cb;return ()=>{};}});
+  apply({on(_, cb){inject=cb;return ()=>{};},inject(_, cb){cb({webServer:{register(){return ()=>{}},},effect(){}});}});
   const rows=[];
   inject(rows);
   assert.equal(rows.length,1);

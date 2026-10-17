@@ -1,0 +1,520 @@
+/* ISLAND animated skins, startup intro, and the plugin settings card. */
+
+/* ---------- workbench skins ---------- */
+
+/* Wallpaper is a body-level layer: the app canvas and sidebar go translucent
+   so the artwork reads as a shallow backdrop, while chat/composer surfaces
+   stay frosted for legibility. */
+body[data-island-skin] {
+  --island-wallpaper-image: var(--island-artwork-island-day, none);
+  background-image:
+    linear-gradient(102deg, rgb(250 251 246 / .94) 0%, rgb(250 251 246 / .62) 46%, rgb(250 251 246 / .8) 100%),
+    var(--island-wallpaper-image);
+  background-size: cover;
+  background-position: center 55%;
+  background-attachment: fixed;
+
+  --dsw-alias-bg-base: rgb(250 251 246 / .58) !important;
+  --dsw-specific-sidebar-fill: rgb(241 244 233 / .66) !important;
+  --dsw-alias-bg-overlay: rgb(242 245 236 / .88) !important;
+}
+body[data-island-skin] .RlGAzG_card {
+  background: rgb(255 255 255 / .86);
+  backdrop-filter: blur(10px) saturate(1.1);
+}
+body[data-island-skin] ._2H3hWW_root {
+  background: rgb(241 244 233 / .66);
+  backdrop-filter: blur(8px);
+}
+
+body[data-island-skin][data-ds-dark-theme] {
+  --island-wallpaper-image: var(--island-artwork-island-night, none);
+  background-image:
+    linear-gradient(102deg, rgb(16 20 15 / .9) 0%, rgb(16 20 15 / .62) 46%, rgb(16 20 15 / .8) 100%),
+    var(--island-wallpaper-image);
+  --dsw-alias-bg-base: rgb(20 24 20 / .62) !important;
+  --dsw-specific-sidebar-fill: rgb(24 30 22 / .7) !important;
+  --dsw-alias-bg-overlay: rgb(37 45 34 / .9) !important;
+}
+body[data-island-skin][data-ds-dark-theme] .RlGAzG_card {
+  background: rgb(28 33 27 / .86);
+}
+body[data-island-skin][data-ds-dark-theme] ._2H3hWW_root {
+  background: rgb(24 30 22 / .7);
+}
+
+/* 「浮岛夜航」keeps a muted day island in light mode and leans into moss orbits. */
+body[data-island-skin="night-island"]:not([data-ds-dark-theme]) {
+  --island-wallpaper-image: var(--island-artwork-island-day, none);
+}
+body[data-island-skin="night-island"]:not([data-ds-dark-theme]) .island-skin-holo {
+  filter: saturate(.5);
+}
+
+/* Ambient nodes appended by the runtime (all pointer-events:none, removable). */
+.island-skin-glow,
+.island-skin-orbit,
+.island-skin-holo,
+.island-skin-pet {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+}
+.island-skin-glow {
+  right: 6%;
+  top: 2%;
+  width: 42%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgb(217 243 151 / .38), transparent 72%);
+  filter: blur(15px);
+  animation: island-skin-halo 4.5s ease-in-out infinite;
+}
+.island-skin-orbit {
+  right: 10%;
+  top: 46%;
+  width: 300px;
+  height: 118px;
+  border: 1px solid rgb(132 170 75 / .4);
+  border-radius: 50%;
+  transform: rotate(-25deg);
+  animation: island-orbit-spin 22s linear infinite;
+}
+.island-skin-orbit::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  top: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #80c7b5;
+  box-shadow: 0 0 11px #80c7b5;
+}
+.island-skin-orbit.island-orbit--two {
+  right: 6%;
+  width: 360px;
+  height: 150px;
+  border-style: dashed;
+  border-color: rgb(104 189 179 / .35);
+  transform: rotate(22deg);
+  animation-direction: reverse;
+  animation-duration: 30s;
+}
+.island-skin-holo {
+  right: 4%;
+  top: 24%;
+  width: 220px;
+  height: 170px;
+  background-image: var(--island-wallpaper-image);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: .22;
+  mask-image: radial-gradient(ellipse, #000 26%, rgb(0 0 0 / .6) 48%, transparent 76%);
+  animation: island-holo-float 5.5s ease-in-out infinite alternate;
+}
+body[data-island-skin][data-ds-dark-theme] .island-skin-glow {
+  background: radial-gradient(ellipse, rgb(120 160 70 / .3), transparent 72%);
+}
+body[data-island-skin="night-island"] .island-skin-orbit {
+  border-color: rgb(132 170 75 / .65);
+  box-shadow: 0 0 16px rgb(172 217 91 / .25);
+}
+body[data-island-skin="night-island"][data-ds-dark-theme] .island-skin-orbit {
+  border-color: rgb(193 231 117 / .5);
+}
+
+/* 「岛灵同行」pixel companion, kept in both light and dark mode. */
+.island-skin-pet {
+  display: none;
+  right: 3.5%;
+  bottom: 108px;
+  width: 104px;
+  height: 126px;
+  background-image: var(--island-artwork-island-mascot, none);
+  background-size: 300% 300%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 8px 14px rgb(59 87 35 / .25));
+  animation: island-pet-float 3.4s ease-in-out infinite;
+}
+body[data-island-skin="island-mascot"] .island-skin-pet {
+  display: block;
+}
+
+/* Active session marker + composer edge animation. */
+body[data-island-skin] .hIlkoa_sessionRow.hIlkoa_selected {
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 2px 0 0 var(--island-moss);
+}
+body[data-island-skin] .hIlkoa_sessionRow.hIlkoa_selected::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -40%;
+  width: 35%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .55), transparent);
+  animation: island-row-scan 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+body[data-island-skin] .RlGAzG_card {
+  overflow: hidden;
+  animation: island-composer-glow 3.8s ease-in-out infinite;
+}
+body[data-island-skin] .RlGAzG_card::after {
+  content: "";
+  position: absolute;
+  left: -35%;
+  top: 0;
+  bottom: 0;
+  width: 24%;
+  background: linear-gradient(90deg, transparent, rgb(198 233 125 / .3), transparent);
+  animation: island-composer-scan 5s ease-in-out infinite;
+  pointer-events: none;
+}
+body[data-island-skin] .RlGAzG_card { position: relative; }
+
+@keyframes island-skin-halo { 50% { opacity: .55; transform: scale(1.1); } }
+@keyframes island-orbit-spin { to { transform: rotate(335deg); } }
+@keyframes island-holo-float { to { transform: translateY(-8px) scale(1.04); opacity: .3; } }
+@keyframes island-pet-float { 50% { translate: 0 -6px; } }
+@keyframes island-row-scan {
+  0%, 35% { left: -40%; opacity: 0; }
+  45% { opacity: 1; }
+  72%, 100% { left: 115%; opacity: 0; }
+}
+@keyframes island-composer-scan {
+  0%, 30% { left: -35%; opacity: 0; }
+  50% { opacity: .8; }
+  80%, 100% { left: 125%; opacity: 0; }
+}
+@keyframes island-composer-glow { 50% { border-color: #c8e694; } }
+
+/* ---------- startup intro ---------- */
+
+.island-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483640;
+  overflow: hidden;
+  isolation: isolate;
+  background: #f8fbf2;
+  color: #283322;
+  font-family: 'DM Sans', 'Microsoft YaHei', sans-serif;
+  opacity: 1;
+  transition: opacity .26s ease;
+}
+.island-intro--closing { opacity: 0; }
+.island-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: .18;
+  background:
+    linear-gradient(rgb(110 149 64 / .09) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(110 149 64 / .09) 1px, transparent 1px);
+  background-size: 39px 39px;
+  mask-image: radial-gradient(ellipse at 73% 50%, #000 8%, transparent 77%);
+  pointer-events: none;
+}
+.island-intro-art {
+  position: absolute;
+  inset: -3%;
+  background-image:
+    linear-gradient(90deg, rgb(248 250 243 / .94) 0%, rgb(248 250 243 / .78) 25%, rgb(248 250 243 / .42) 48%, transparent 72%),
+    var(--island-artwork-island-day, linear-gradient(160deg, #eef5dc 0%, #dcebc0 55%, #cfe3ae 100%));
+  background-size: cover;
+  background-position: center 53%;
+  mask-image: linear-gradient(180deg, #000 0 78%, transparent 100%);
+  animation: island-intro-zoom 2.6s cubic-bezier(.2, .75, .25, 1) both;
+}
+.island-intro-halo {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  top: -5%;
+  width: 49%;
+  height: 112%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgb(250 255 198 / .5) 0%, rgb(229 245 200 / .25) 39%, transparent 72%);
+  filter: blur(16px);
+  animation: island-intro-halo 3.2s ease-in-out infinite;
+}
+.island-intro-orbit {
+  position: absolute;
+  z-index: 3;
+  right: 10%;
+  top: 52%;
+  width: 340px;
+  height: 150px;
+  border: 1px solid rgb(133 170 74 / .6);
+  border-radius: 50%;
+  transform: translateY(-50%) rotate(-23deg);
+  box-shadow: 0 0 18px rgb(172 217 91 / .2), inset 0 0 12px rgb(177 216 106 / .12);
+  animation: island-orbit-spin 12s linear infinite;
+}
+.island-intro-orbit::before,
+.island-intro-orbit::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: #c4e96b;
+  box-shadow: 0 0 0 4px rgb(196 233 107 / .16), 0 0 13px #b5df5a;
+}
+.island-intro-orbit::before { width: 6px; height: 6px; left: 10%; top: 44%; }
+.island-intro-orbit::after { width: 4px; height: 4px; right: 18%; top: 4%; }
+.island-intro-orbit.two {
+  right: 6%;
+  width: 420px;
+  height: 200px;
+  border-style: dashed;
+  border-color: rgb(104 189 179 / .42);
+  transform: translateY(-50%) rotate(25deg);
+  animation-direction: reverse;
+  animation-duration: 18s;
+}
+.island-intro-orbit.two::before { background: #74c9bb; box-shadow: 0 0 0 4px rgb(116 201 187 / .15), 0 0 12px #74c9bb; }
+.island-intro-orbit.two::after { display: none; }
+.island-intro-scan {
+  position: absolute;
+  z-index: 4;
+  top: -18%;
+  bottom: -18%;
+  left: 50%;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, rgb(234 255 191 / .6), transparent);
+  filter: blur(6px);
+  transform: skewX(-13deg) translateX(-46vw);
+  animation: island-intro-scan 1.7s cubic-bezier(.22, .61, .36, 1) .12s both;
+}
+.island-intro-copy {
+  position: absolute;
+  z-index: 5;
+  left: 7%;
+  top: 52%;
+  width: 46%;
+  transform: translateY(-50%);
+  animation: island-intro-copy-in .8s cubic-bezier(.16, 1, .3, 1) both;
+}
+.island-intro-kicker {
+  color: #637d3f;
+  font-size: 11px;
+  letter-spacing: .24em;
+}
+.island-intro-title {
+  margin: 14px 0 8px;
+  color: #2d3826;
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(30px, 4.4vw, 56px);
+  line-height: 1.4;
+  letter-spacing: .08em;
+}
+.island-intro-title em { font-style: normal; color: #66882e; }
+.island-intro-sub {
+  color: #728065;
+  font-size: 10px;
+  letter-spacing: .22em;
+}
+.island-intro-pet {
+  position: absolute;
+  z-index: 4;
+  right: 16%;
+  top: 14%;
+  width: 190px;
+  height: 230px;
+  background-image: var(--island-artwork-island-mascot, none);
+  background-size: 300% 300%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 9px 15px rgb(59 87 35 / .2));
+  opacity: 0;
+  transform: translateY(10px) scale(.9);
+  pointer-events: none;
+}
+.island-intro[data-visual="mascot"] .island-intro-art { opacity: .22; filter: blur(1.5px); }
+.island-intro[data-visual="mascot"] .island-intro-pet {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: island-pet-in .7s cubic-bezier(.2, .8, .2, 1) both, island-pet-float 3.2s ease-in-out .7s infinite;
+}
+.island-intro-chip {
+  position: absolute;
+  z-index: 6;
+  right: 20px;
+  top: 20px;
+  padding: 8px 11px;
+  border: 1px solid rgb(255 255 255 / .78);
+  border-radius: 8px;
+  background: rgb(249 255 240 / .66);
+  color: #647650;
+  font-size: 9px;
+  line-height: 1.7;
+  letter-spacing: .1em;
+  backdrop-filter: blur(8px);
+}
+.island-intro-bottom {
+  position: absolute;
+  z-index: 6;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.island-intro-progress {
+  width: 140px;
+  height: 2px;
+  background: rgb(83 111 50 / .1);
+  overflow: hidden;
+}
+.island-intro-progress i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #9dc54e, #d6f17e, #79c9b8);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: island-intro-progress 1.8s ease-out both;
+}
+.island-intro-bottom small {
+  color: #758266;
+  font-size: 9px;
+  letter-spacing: .12em;
+}
+.island-intro-skip {
+  margin-left: auto;
+  padding: 7px 14px;
+  border: 1px solid #dfe9d2;
+  border-radius: 999px;
+  background: rgb(255 255 255 / .73);
+  color: #52663b;
+  font-size: 11px;
+  cursor: pointer;
+}
+.island-intro-skip:hover { background: #fff; border-color: #b7cf8f; }
+.island-intro-skip:focus-visible { outline: 2px solid #7a9c3e; outline-offset: 2px; }
+
+@keyframes island-intro-zoom { from { transform: scale(1.1); } to { transform: scale(1.01); } }
+@keyframes island-intro-halo { 50% { opacity: .55; transform: scale(1.1); } }
+@keyframes island-intro-copy-in {
+  from { opacity: 0; transform: translate(-15px, -50%); filter: blur(3px); }
+  to { opacity: 1; transform: translate(0, -50%); filter: blur(0); }
+}
+@keyframes island-pet-in {
+  from { opacity: 0; transform: translateY(15px) scale(.8); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes island-intro-scan {
+  0% { transform: skewX(-13deg) translateX(-46vw); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: skewX(-13deg) translateX(46vw); opacity: 0; }
+}
+@keyframes island-intro-progress { to { transform: scaleX(1); } }
+
+/* ---------- plugin settings card ---------- */
+
+.island-card {
+  list-style: none;
+  max-width: 520px;
+  border: 1px solid var(--dsw-alias-settings-card-stroke, var(--island-line, #e0e6d6));
+  border-radius: 12px;
+  background: var(--dsw-alias-settings-card-fill, var(--island-surface, #fff));
+  overflow: hidden;
+}
+.island-card-headtext {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 12px 14px;
+}
+.island-card-name { font-weight: 600; font-size: 13px; }
+.island-card-desc { font-size: 11px; opacity: .65; flex-basis: 100%; }
+.island-card-pending {
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--island-selected, #e4edcf);
+  color: var(--island-moss, #586f24);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.island-card-body { padding: 4px 14px 12px; border-top: 1px solid var(--island-line, #e0e6d6); }
+.island-field { margin-top: 12px; }
+.island-field-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  opacity: .7;
+}
+.island-segmented { display: flex; flex-wrap: wrap; gap: 6px; }
+.island-seg-option {
+  padding: 6px 12px;
+  border: 1px solid var(--island-line, #e0e6d6);
+  border-radius: 999px;
+  background: var(--island-subtle, #f2f5ec);
+  color: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.island-seg-option:hover { border-color: var(--island-moss, #586f24); }
+.island-seg-option[aria-pressed="true"] {
+  background: var(--island-lime, #cef76c);
+  border-color: #9fca3d;
+  color: var(--island-lime-ink, #253319);
+  font-weight: 600;
+}
+.island-seg-option:focus-visible { outline: 2px solid var(--island-moss, #586f24); outline-offset: 2px; }
+.island-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.island-card-error {
+  margin: 0;
+  color: #b3401e;
+  font-size: 11px;
+}
+.island-card-discard,
+.island-card-save {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.island-card-discard {
+  margin-left: auto;
+  border: 1px solid var(--island-line, #e0e6d6);
+  background: none;
+  color: inherit;
+}
+.island-card-save {
+  border: 0;
+  background: var(--island-moss, #586f24);
+  color: #fff;
+}
+.island-card-save:disabled,
+.island-card-discard:disabled { opacity: .45; cursor: default; }
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .island-intro *,
+  .island-skin-glow,
+  .island-skin-orbit,
+  .island-skin-holo,
+  .island-skin-pet,
+  body[data-island-skin] .hIlkoa_sessionRow.hIlkoa_selected::after,
+  body[data-island-skin] .RlGAzG_card,
+  body[data-island-skin] .RlGAzG_card::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .island-intro-copy { opacity: 1; }
+}

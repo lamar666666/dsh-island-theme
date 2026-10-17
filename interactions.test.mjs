@@ -17,7 +17,7 @@ const pane = (role='menu') => `<div class="wq12jW_menu" role="${role}"><button r
 test('generated client owns its live stylesheet and removes it on disposal', () => {
   const dom=new JSDOM('<html><body></body></html>',{runScripts:'outside-only',pretendToBeVisual:true});
   let dispose;
-  dom.window.__ModuleLoader__={load(module){module.factory().apply({inject(){},effect(fn){dispose=fn();}});}};
+  dom.window.__ModuleLoader__={load(module){module.factory(()=>({createElement:()=>({}),useState:(v)=>[v,()=>{}],useEffect:()=>{}})).apply({inject(){},effect(fn){dispose=fn();}});}};
   try {
     runInContext(readFileSync(new URL('./client.js',import.meta.url),'utf8'),dom.getInternalVMContext());
     const style=dom.window.document.querySelector('[data-plugin-css="island-theme-live"]');

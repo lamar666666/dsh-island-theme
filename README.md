@@ -2,12 +2,16 @@
 
 [English](README.en.md)
 
-暖白、苔绿、青柠配色，配套森林深色模式。同时提供更宽的对话区、可读代码、单行侧栏标题、更早的标题预览和可拖动的推理等级滑块。
+暖白、苔绿、青柠配色，配套森林深色模式。同时提供更宽的对话区、可读代码、单行侧栏标题、更早的标题预览、可拖动的推理等级滑块、明亮启动片头和三款动画工作台皮肤。
 
 ![ISLAND 主题浅色模式效果](docs/images/preview.png)
 
 ## 能力与边界
 
+- 启动时播放约 1.8 秒的明亮片头（浮岛或岛灵主视觉，可在设置中切换），随后淡入工作台；提供“跳过片头”按钮，按 Esc 立即关闭；片头进度仅作装饰，不代表真实加载进度；系统开启“减少动效”时自动跳过。
+- 三款工作台皮肤：晨光浮岛（默认）、浮岛夜航（加强轨道光效）、岛灵同行（昼色背景 + 岛灵小伙伴）。皮肤仅追加背景光轨、会话标记和输入框边缘等环境动效，聊天布局与交互区域不变；深色模式下自动切换夜间美术。
+- 皮肤与片头主视觉在 设置 → 内置插件 → ISLAND 主题 页签中切换，保存后立即生效并写入配置档案，重启后保留。
+- 美术资源全部内嵌在插件包内（本地 WebP，无外部图片请求），解码失败时回退纯 CSS 渐变。
 - 对话与输入框统一加宽，保留原生宽度拖动设置。
 - 代码块字号至少 14px，长代码保持内部横向滚动。
 - 会话和工作区标题始终单行；会话标题悬停滚动，操作按钮使用固定区域，不挤压文字。
@@ -26,7 +30,7 @@
 
 ```powershell
 $DshCli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
-& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.4.1.tgz'
+& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.5.0.tgz'
 ```
 
 自定义安装位置时，将 `$DshCli` 指向实际目录中的 `resources\runtime\cli\bin\dsh.cmd`。安装后打开 Harness，在设置中切换浅色、深色、跟随系统。
@@ -51,7 +55,9 @@ npm run pack:check
 npm pack
 ```
 
-入口 `index.mjs` 注入三份样式。`client-runtime.mjs` 管理交互，`npm run build` 生成宿主加载的 `client.js`，并在 Git 中保留生成文件以支持直接安装。等级来自原生菜单，使用宿主共享模型选择服务保存并保持弹框；无法安全解析宿主服务时回退原生按钮。模型列表不被改写。
+入口 `index.mjs` 注入四份样式（含 `visuals.css`），并通过 `webServer` 注册 `/__island-theme/config` 路由读写插件配置、写回 profile patch 持久化。`client-runtime.mjs` 管理交互，`theme-runtime.mjs` 管理皮肤与片头生命周期，`settings-page.mjs` 渲染设置页签；`npm run build` 把三者与 `assets/` 下的 WebP 美术一起内嵌生成宿主加载的 `client.js`，并在 Git 中保留生成文件以支持直接安装。等级来自原生菜单，使用宿主共享模型选择服务保存并保持弹框；无法安全解析宿主服务时回退原生按钮。模型列表不被改写。
+
+美术来源为已获授权的本地博客配图，由 `scripts/prepare-artwork.py`（Pillow）转换；构建产物不得包含源仓库路径。
 
 仓库：https://github.com/lamar666666/dsh-island-theme
 

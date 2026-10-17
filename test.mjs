@@ -5,14 +5,26 @@ import { readFileSync } from 'node:fs';
 test('registers offline style injection and releases it on disposal', async () => {
   const { apply } = await import('./index.mjs');
   let event, handler, disposed = false;
-  const dispose = apply({ on(name, cb) { event = name; handler = cb; return () => { disposed = true; }; } });
+  const routes = [];
+  const scope = {
+    webServer: { register(route) { routes.push(route); return () => {}; } },
+    effect() {},
+  };
+  const dispose = apply({
+    on(name, cb) { event = name; handler = cb; return () => { disposed = true; }; },
+    inject(deps, cb) { cb(scope); },
+  });
   assert.equal(event, 'webserver/index-inject');
+  assert.equal(routes.length, 1);
+  assert.equal(routes[0].kind, 'exact');
+  assert.equal(routes[0].path, '/__island-theme/config');
   const table = [];
   handler(table);
   assert.equal(table.length, 1);
   assert.equal(table[0].kind, 'style');
   assert.match(table[0].text, /#fafbf6/);
   assert.match(table[0].text, /data-ds-dark-theme/);
+  assert.match(table[0].text, /island-intro/);
   assert.doesNotMatch(table[0].text, /@import|https?:\/\//);
   dispose();
   assert.equal(disposed, true);
@@ -27,4 +39,18 @@ test('body text and lime-button colors retain accessible contrast', () => {
   for (const text of ['moss','caption','muted']) for (const background of ['paper','surface','subtle','sidebar']) {
     assert(ratio(value(text),value(background))>=4.5,text+'/'+background);
   }
+});
+
+test('generated client embeds the three island skins without source checkout paths', () => {
+  const client = readFileSync(new URL('./client.js', import.meta.url), 'utf8');
+  assert.equal((client.match(/data:image\/webp;base64,/g) ?? []).length, 3);
+  for (const skin of ['day-island', 'night-island', 'island-mascot']) assert(client.includes(skin));
+  assert.doesNotMatch(client, /D:\/project\/my-blog/i);
+});
+
+test('generated client registers the settings card and config endpoint', () => {
+  const client = readFileSync(new URL('./client.js', import.meta.url), 'utf8');
+  assert.match(client, /settings\.plugins\.tab/);
+  assert.match(client, /__island-theme\/config/);
+  assert.match(client, /require\('react'\)/);
 });
