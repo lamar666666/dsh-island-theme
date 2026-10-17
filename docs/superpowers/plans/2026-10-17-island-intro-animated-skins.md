@@ -40,11 +40,11 @@ Run: `node --test test.mjs`
 
 Expected: the new asset assertions fail because the build does not yet embed artwork.
 
-- [ ] **Step 3: Prepare optimized assets**
+- [ ] **Step 3: Prepare optimized assets and embed them in the client build**
 
-Use Pillow to read exactly these approved sources: `D:/project/my-blog/frontend/public/images/island-hero.png`, `D:/project/my-blog/frontend/public/images/island-night.png`, and `D:/project/my-blog/frontend/public/images/lamar-pet.png`. Save `island-hero.png` as `assets/island-day.webp` and `island-night.png` as `assets/island-night.webp` at quality 88 and method 6. Save `lamar-pet.png` as `assets/island-mascot.webp` in lossless WebP at method 6 to preserve transparency and pixel edges. Do not reference the blog project path at runtime.
+Use Pillow to read exactly these approved sources: `D:/project/my-blog/frontend/public/images/island-hero.png`, `D:/project/my-blog/frontend/public/images/island-night.png`, and `D:/project/my-blog/frontend/public/images/lamar-pet.png`. Save `island-hero.png` as `assets/island-day.webp` and `island-night.png` as `assets/island-night.webp` at quality 88 and method 6. Save `lamar-pet.png` as `assets/island-mascot.webp` in lossless WebP at method 6 to preserve transparency and pixel edges. Update `scripts/build-client.mjs` to read these files and serialize data URLs into the generated client. Do not reference the blog project path at runtime.
 
-- [ ] **Step 4: Re-run the focused test after the builder wiring in Task 3**
+- [ ] **Step 4: Run the focused test and verify it passes**
 
 Run: `node --test test.mjs`
 
