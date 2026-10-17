@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.5.0
+
+- Add a ~1.8s bright startup intro with two selectable visuals (floating
+  island / island spirit), a skip button, Escape dismissal and
+  reduced-motion bypass; the progress line is decorative only.
+- Add three animated workbench skins — 晨光浮岛 (default), 浮岛夜航 and
+  岛灵同行 — with ambient glows, orbit lines, an active-session marker and
+  a composer edge animation; chat layout and interactions are unchanged.
+- Add a plugin settings tab under 设置 → 内置插件 → ISLAND 主题 that stages
+  skin/intro choices, saves through the plugin-owned
+  `/__island-theme/config` route and persists via the profile patch tree.
+- Embed the three approved artwork assets as WebP data URLs in `client.js`
+  (reproducible via `scripts/prepare-artwork.py`); CSS gradients remain the
+  fallback when decoding fails.
+
 ## 1.4.1
 
 - Keep native effort rows hidden when the host rewrites their className:
