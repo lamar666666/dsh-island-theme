@@ -28,6 +28,7 @@
 - Create: `assets/island-day.webp`
 - Create: `assets/island-night.webp`
 - Create: `assets/island-mascot.webp`
+- Modify: `scripts/build-client.mjs`
 - Test: `test.mjs`
 
 - [ ] **Step 1: Add a failing build-output test**
@@ -36,7 +37,7 @@ Extend the existing generated-client test to assert that the built `client.js` c
 
 - [ ] **Step 2: Run the focused test and confirm it fails**
 
-Run: `node --test test.mjs`
+Run: `npm test`
 
 Expected: the new asset assertions fail because the build does not yet embed artwork.
 
@@ -46,7 +47,7 @@ Use Pillow to read exactly these approved sources: `D:/project/my-blog/frontend/
 
 - [ ] **Step 4: Run the focused test and verify it passes**
 
-Run: `node --test test.mjs`
+Run: `npm test`
 
 Expected: the generated-client assertions pass and the embedded client contains only portable image data URLs.
 
