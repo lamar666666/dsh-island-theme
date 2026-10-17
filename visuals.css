@@ -230,7 +230,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   background-size: cover;
   background-position: center 53%;
   mask-image: linear-gradient(180deg, #000 0 78%, transparent 100%);
-  animation: island-intro-zoom 2.6s cubic-bezier(.2, .75, .25, 1) both;
+  animation: island-intro-zoom 6s cubic-bezier(.2, .75, .25, 1) both;
 }
 .island-intro-halo {
   position: absolute;
@@ -380,7 +380,7 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   background: linear-gradient(90deg, #9dc54e, #d6f17e, #79c9b8);
   transform: scaleX(0);
   transform-origin: left;
-  animation: island-intro-progress 1.8s ease-out both;
+  animation: island-intro-progress 6s ease-out both;
 }
 .island-intro-bottom small {
   color: #758266;

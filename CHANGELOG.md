@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.1
+
+- Extend the startup intro to ~6s and stretch its zoom/progress animations
+  so the scene stays alive for the full hold.
+
 ## 1.5.0
 
 - Add a ~1.8s bright startup intro with two selectable visuals (floating

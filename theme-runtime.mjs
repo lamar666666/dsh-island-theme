@@ -14,7 +14,7 @@ export function installIslandTheme(document, window, options = {}) {
   const SKINS = ['day-island', 'night-island', 'island-mascot'];
   const INTRO_VISUALS = ['island', 'mascot'];
   const DEFAULTS = { skin: 'day-island', introVisual: 'island' };
-  const INTRO_DURATION_MS = 1800;
+  const INTRO_DURATION_MS = 6000;
   const INTRO_CLOSE_MS = 260;
 
   function normalize(raw) {
