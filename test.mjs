@@ -28,3 +28,10 @@ test('body text and lime-button colors retain accessible contrast', () => {
     assert(ratio(value(text),value(background))>=4.5,text+'/'+background);
   }
 });
+
+test('generated client embeds the three island skins without source checkout paths', () => {
+  const client = readFileSync(new URL('./client.js', import.meta.url), 'utf8');
+  assert.equal((client.match(/data:image\/webp;base64,/g) ?? []).length, 3);
+  for (const skin of ['day-island', 'night-island', 'island-mascot']) assert(client.includes(skin));
+  assert.doesNotMatch(client, /D:\/project\/my-blog/i);
+});
