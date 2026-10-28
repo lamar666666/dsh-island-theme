@@ -1,4 +1,4 @@
-/* ISLAND workbench 1.2.0. Selectors verified on Harness 0.2.0-rc.2. */
+/* ISLAND workbench 1.0.1. Host class prefixes are retargeted per host build; see host-classes.mjs. */
 body .Dc7zOa_body:not(.Dc7zOa_embeddedBody) {
   --dsh-chat-content-width: var(--dsh-chat-user-width, clamp(680px, calc(var(--dsh-conversation-column-width, 0px) * .86), 1440px));
   --dsh-composer-card-max-width: var(--dsh-chat-content-width);

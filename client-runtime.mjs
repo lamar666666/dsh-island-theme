@@ -1,6 +1,11 @@
 /** Lifecycle-owned DOM enhancements; no host API, model IDs or level names. */
 export function installIslandInteractions(d, w, options = {}) {
   w.__islandInteractionsDispose?.();
+  // Host CSS modules rehash their class prefixes on every build; resolve them
+  // through host-classes.mjs instead of hardcoding a prefix here.
+  const hostClasses = options.hostClasses || {};
+  const hostClass = (group, local) => (hostClasses[group] || group) + '_' + local;
+  const hostSelector = (group, local) => '.' + hostClass(group, local);
   const records = new Map();
   let disposed = false, refreshTimer = null, hoverTimer = null, hoverRow = null, preview = null;
   const zh = () => (d.documentElement.lang || 'zh').startsWith('zh');
@@ -23,17 +28,17 @@ export function installIslandInteractions(d, w, options = {}) {
   }
   function stopHover() { hidePreview(); hoverRow = null; }
   function showPreview(row) {
-    if (disposed || !row.isConnected || row.classList.contains('hIlkoa_menuOpen')) return;
+    if (disposed || !row.isConnected || row.classList.contains(hostClass('hIlkoa', 'menuOpen'))) return;
     // Let the host rich card take over, retaining task, approval and status details.
-    if (d.querySelector('.hIlkoa_hoverContent')) return;
-    const title = row.querySelector('.hIlkoa_title')?.textContent?.trim();
+    if (d.querySelector(hostSelector('hIlkoa', 'hoverContent'))) return;
+    const title = row.querySelector(hostSelector('hIlkoa', 'title'))?.textContent?.trim();
     if (!title) return;
     preview = node('div', 'island-title-preview');
     preview.id = 'island-title-preview'; preview.setAttribute('role', 'tooltip');
     preview.append(node('div', 'island-title-preview-heading', title));
     const meta = node('div', 'island-title-preview-meta');
-    const workspace = row.closest('._9lTDKa_groupSection')?.querySelector('.hIlkoa_projectRow .hIlkoa_title')?.textContent?.trim();
-    const time = row.querySelector('.hIlkoa_time')?.textContent?.trim();
+    const workspace = row.closest(hostSelector('_9lTDKa', 'groupSection'))?.querySelector(`${hostSelector('hIlkoa', 'projectRow')} ${hostSelector('hIlkoa', 'title')}`)?.textContent?.trim();
+    const time = row.querySelector(hostSelector('hIlkoa', 'time'))?.textContent?.trim();
     if (workspace) meta.append(node('span', '', workspace));
     if (time) meta.append(node('span', '', time));
     if (meta.childElementCount) preview.append(meta);
@@ -47,7 +52,7 @@ export function installIslandInteractions(d, w, options = {}) {
   }
   function over(event) {
     if (!(event.target instanceof w.Element)) return;
-    const row = event.target.closest('.hIlkoa_sessionRow');
+    const row = event.target.closest(hostSelector('hIlkoa', 'sessionRow'));
     if (!row || row === hoverRow) return;
     stopHover(); hoverRow = row;
     hoverTimer = w.setTimeout(() => showPreview(row), 220);
@@ -60,7 +65,7 @@ export function installIslandInteractions(d, w, options = {}) {
   function key(event) { if (event.key === 'Escape') stopHover(); }
   function scrolled(event) {
     // The host marquee scrolls its own title. Only layout scrolling dismisses us.
-    if (hoverRow && event.target === hoverRow.querySelector('.hIlkoa_title')) return;
+    if (hoverRow && event.target === hoverRow.querySelector(hostSelector('hIlkoa', 'title'))) return;
     stopHover();
   }
 
@@ -91,7 +96,7 @@ export function installIslandInteractions(d, w, options = {}) {
     const header = node('div', 'island-effort-header');
     const center=node('div','island-effort-center');
     const value = node('output', 'island-effort-value');
-    const model=node('button','island-effort-model',d.querySelector('.wq12jW_triggerLabel')?.textContent?.trim() || (zh()?'推理等级':'Reasoning effort'));
+    const model=node('button','island-effort-model',d.querySelector(hostSelector('wq12jW', 'triggerLabel'))?.textContent?.trim() || (zh()?'推理等级':'Reasoning effort'));
     model.type='button';model.setAttribute('aria-label',zh()?'返回模型菜单':'Back to model menu');
     const reset=node('button','island-effort-reset');reset.type='button';
     reset.setAttribute('aria-label',zh()?'重置为默认推理等级':'Reset to default reasoning effort');
@@ -247,15 +252,15 @@ export function installIslandInteractions(d, w, options = {}) {
   }
   function sync() {
     refreshTimer = null; if (disposed) return;
-    if (hoverRow && (!hoverRow.isConnected || hoverRow.classList.contains('hIlkoa_menuOpen'))) stopHover();
-    if (preview && d.querySelector('.hIlkoa_hoverContent')) hidePreview();
+    if (hoverRow && (!hoverRow.isConnected || hoverRow.classList.contains(hostClass('hIlkoa', 'menuOpen')))) stopHover();
+    if (preview && d.querySelector(hostSelector('hIlkoa', 'hoverContent'))) hidePreview();
     for (const [menu, record] of records) {
       const data = menu.isConnected ? discover(menu) : null;
       if (!data || !record.root.isConnected || data.buttons.some((button, i) => button !== record.buttons[i]) || data.buttons.length !== record.buttons.length || data.labels.some((label,i)=>label!==record.labels[i])) {
         restore(record); records.delete(menu);
       } else record.update();
     }
-    for (const menu of d.querySelectorAll('.wq12jW_menu')) {
+    for (const menu of d.querySelectorAll(hostSelector('wq12jW', 'menu'))) {
       if (records.has(menu)) continue;
       const data = discover(menu); if (data) records.set(menu, attach(menu, data));
     }

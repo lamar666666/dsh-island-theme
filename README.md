@@ -23,7 +23,9 @@
 - 使用系统已有字体，无外部字体请求、统计上报和模型调用；交互模块卸载时会清理事件和临时界面。
 - 不改写对话、不生成虚假的测试结果、不替换模型名称或授权状态。
 
-验证环境为官方 Windows x64 桌面版 **0.2.0-rc.2**。其他版本和平台尚未验证。布局选择器与该版本有关，升级后应重新检查。不改变原生系统标题栏。
+验证环境为官方 Windows x64 桌面版 **0.2.1-rc.3**。其他版本和平台尚未验证。不改变原生系统标题栏。
+
+宿主使用 CSS Modules，每次构建都会重算组件的类名前缀，因此样式里出现的 `wnFoaW_`、`GRgSLq_` 这类前缀都不是固定的：`host-classes.mjs` 把“旧前缀 → 当前前缀”集中成一张表，构建时改写 CSS，运行期再从页面上唯一的锚点类名反读前缀。宿主升级后跑 `npm run check:host` 看有没有漂移，用 `npm run retarget` 重算，再 `npm run build`。
 
 ## 安装与卸载
 
@@ -31,7 +33,7 @@
 
 ```powershell
 $DshCli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
-& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.0.tgz'
+& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.1.tgz'
 ```
 
 自定义安装位置时，将 `$DshCli` 指向实际目录中的 `resources\runtime\cli\bin\dsh.cmd`。安装后打开 Harness，在设置中切换浅色、深色、跟随系统。

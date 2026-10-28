@@ -21,7 +21,10 @@ test('generated client owns its live stylesheet and removes it on disposal', () 
   try {
     runInContext(readFileSync(new URL('./client.js',import.meta.url),'utf8'),dom.getInternalVMContext());
     const style=dom.window.document.querySelector('[data-plugin-css="island-theme-live"]');
-    assert(style);assert(style.textContent.includes('ISLAND interactions 1.4.1'));
+    assert(style);assert(style.textContent.includes('ISLAND interactions 1.0.1'));
+    // Host prefixes are retargeted, so the live sheet must not keep authored ones.
+    assert.doesNotMatch(style.textContent, /\.hIlkoa_/);
+    assert.match(style.textContent, /\.wnFoaW_sessionRow/);
     dispose();assert.equal(dom.window.document.querySelector('[data-plugin-css="island-theme-live"]'),null);
     assert.equal(dom.window.document.body.classList.contains('island-interactions-active'),false);
   } finally {dispose?.();dom.window.close();}

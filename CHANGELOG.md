@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.1
+
+- Retarget the host's CSS-module class prefixes per build. Styles stay authored
+  against the legacy prefixes and are rewritten from `host-classes.mjs`; the
+  client also re-resolves each prefix from a mounted anchor class, so a host
+  rebuild that keeps the component's class list heals without a repack.
+- Restores the theme on DeepSeek Harness 0.2.1-rc.3, whose rebuild rehashed
+  every component prefix; sidebar rows, composer geometry, the reasoning pane,
+  usage pill and title previews had silently stopped matching.
+- Fixes the reasoning pane never attaching on that host: the runtime located
+  the effort menu through a hardcoded prefix, which no longer existed.
+- Add `npm run check:host` to report prefix drift against the installed
+  `app.asar` and `npm run retarget` to refresh the map after a host update.
+
 ## 1.0.0
 
 First stable release.

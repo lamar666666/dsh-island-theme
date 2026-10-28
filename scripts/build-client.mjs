@@ -3,6 +3,7 @@ import { installIslandInteractions } from '../client-runtime.mjs';
 import { createEffortCommitter } from '../host-bridge.mjs';
 import { installIslandTheme } from '../theme-runtime.mjs';
 import { createIslandSettingsCard } from '../settings-page.mjs';
+import { HOST_CLASS_GROUPS, resolveHostClasses, retargetCss } from '../host-classes.mjs';
 
 const css=(await Promise.all(['theme.css','workbench.css','interactions.css','visuals.css'].map(file=>readFile(new URL('../'+file,import.meta.url),'utf8')))).join('\n');
 const assets = Object.fromEntries(await Promise.all([
@@ -89,15 +90,18 @@ window.__ModuleLoader__.load({
           }, IslandThemeCard));
         });
         ctx.effect(() => {
+        // Styles are authored against legacy host prefixes; rewrite them to the
+        // prefixes actually mounted on this host build (see host-classes.mjs).
+        const hostClasses=(${resolveHostClasses.toString()})(document, ${JSON.stringify(HOST_CLASS_GROUPS)});
         const style=document.createElement('style');
         style.dataset.plugin='dsh-island-theme';style.dataset.pluginCss='island-theme-live';
-        style.textContent=${JSON.stringify(css)};document.head.appendChild(style);
+        style.textContent=(${retargetCss.toString()})(${JSON.stringify(css)}, hostClasses);document.head.appendChild(style);
         const themeHandle=(${installIslandTheme.toString()})(document, window, {
           assets: islandAssets,
           ready: Promise.resolve().then(() => islandHost.load()).catch(() => undefined),
         });
         islandHost.applied=(config)=>themeHandle.update(config);
-        const dispose=(${installIslandInteractions.toString()})(document, window, {commitEffort:request=>commitEffort?commitEffort(request):Promise.resolve({handled:false})});
+        const dispose=(${installIslandInteractions.toString()})(document, window, {hostClasses,commitEffort:request=>commitEffort?commitEffort(request):Promise.resolve({handled:false})});
         return () => {themeHandle.dispose();dispose();style.remove();};
       }); }
     };

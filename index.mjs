@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { HOST_CLASS_CURRENT, retargetCss } from './host-classes.mjs';
 
 export const name = 'island-theme';
 export const description = 'ISLAND 开发工作台：暖白与森林配色、更宽的对话、清晰代码及精简工具栏。';
@@ -17,9 +18,14 @@ export function normalizeIslandConfig(raw) {
   };
 }
 
-const css = ['theme.css', 'workbench.css', 'interactions.css', 'visuals.css']
-  .map(file => readFileSync(new URL(file, import.meta.url), 'utf8'))
-  .join('\n');
+// Authored against the legacy host prefixes; retarget for the host build this
+// release targets so the server-injected paint is already correct.
+const css = retargetCss(
+  ['theme.css', 'workbench.css', 'interactions.css', 'visuals.css']
+    .map(file => readFileSync(new URL(file, import.meta.url), 'utf8'))
+    .join('\n'),
+  HOST_CLASS_CURRENT,
+);
 
 function sendJson(res, status, body) {
   const payload = JSON.stringify(body);

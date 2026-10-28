@@ -1,6 +1,6 @@
 {
   "name": "dsh-island-theme",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ISLAND — a warm, readable development workbench theme for DeepSeek Harness",
   "type": "module",
   "license": "MIT",
@@ -19,6 +19,7 @@
   },
   "files": [
     "index.mjs",
+    "host-classes.mjs",
     "client.js",
     "theme.css",
     "workbench.css",
@@ -47,7 +48,9 @@
   "scripts": {
     "build": "node scripts/build-client.mjs",
     "pretest": "npm run build",
-    "test": "node --test test.mjs layout.test.mjs interactions.test.mjs config.test.mjs theme-runtime.test.mjs settings-page.test.mjs",
+    "test": "node --test test.mjs layout.test.mjs interactions.test.mjs config.test.mjs theme-runtime.test.mjs settings-page.test.mjs host-classes.test.mjs",
+    "check:host": "node scripts/host-classes.mjs",
+    "retarget": "node scripts/host-classes.mjs --write",
     "prepack": "npm run build",
     "pack:check": "npm pack --dry-run --ignore-scripts"
   },

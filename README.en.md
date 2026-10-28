@@ -25,7 +25,9 @@ Independent community plugin; not an official DeepSeek product. Original brandin
 
 ## Compatibility
 
-Validated on official Windows x64 DeepSeek Harness Desktop **0.2.0-rc.2**. Other versions/platforms are unqualified. Palette tokens and layout selectors are version-specific; recheck after upgrading Harness. Native OS title bars are outside its scope.
+Validated on official Windows x64 DeepSeek Harness Desktop **0.2.1-rc.3**. Other versions/platforms are unqualified. Native OS title bars are outside its scope.
+
+Harness uses CSS Modules, so component class prefixes (`wnFoaW_`, `GRgSLq_`, …) are rehashed on every host build. `host-classes.mjs` keeps one legacy-prefix to current-prefix table: the build rewrites the CSS from it and the client re-reads each prefix from a unique anchor class on the page. After a host upgrade run `npm run check:host`, then `npm run retarget` and `npm run build` if it reports drift.
 
 ## Install
 
@@ -33,7 +35,7 @@ Download a release tarball or run `npm pack` on this source. Fully quit Harness 
 
 ```powershell
 $DshCli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
-& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.0.tgz'
+& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.1.tgz'
 ```
 
 For a custom installation, point `$DshCli` to that installation's `resources\runtime\cli\bin\dsh.cmd`. Reopen Harness; select light/dark/system in Settings → Appearance.
