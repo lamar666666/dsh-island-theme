@@ -35,7 +35,7 @@ Download a release tarball or run `npm pack` on this source. Fully quit Harness 
 
 ```powershell
 $DshCli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
-& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.1.tgz'
+& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.2.tgz'
 ```
 
 For a custom installation, point `$DshCli` to that installation's `resources\runtime\cli\bin\dsh.cmd`. Reopen Harness; select light/dark/system in Settings → Appearance.

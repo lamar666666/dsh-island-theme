@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.2
+
+- Stop clipping the composer card. The skinned card set `overflow: hidden` for a
+  sweep highlight, but the composer popovers (slash commands, `@` mentions and
+  the attach menu) are absolutely positioned above the card, so the whole menu
+  was clipped away and clicking `+` appeared to do nothing.
+- Paint that sweep as a background layer on the card instead, so the card no
+  longer needs to clip its children.
+
 ## 1.0.1
 
 - Retarget the host's CSS-module class prefixes per build. Styles stay authored

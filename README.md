@@ -33,7 +33,7 @@
 
 ```powershell
 $DshCli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
-& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.1.tgz'
+& $DshCli plugin --profile desktop add 'C:\path\to\dsh-island-theme-1.0.2.tgz'
 ```
 
 自定义安装位置时，将 `$DshCli` 指向实际目录中的 `resources\runtime\cli\bin\dsh.cmd`。安装后打开 Harness，在设置中切换浅色、深色、跟随系统。

@@ -1,4 +1,4 @@
-/* ISLAND 1.0.1 animated skins, startup intro, and the plugin settings card. Host class prefixes are retargeted per host build; see host-classes.mjs. */
+/* ISLAND 1.0.2 animated skins, startup intro, and the plugin settings card. Host class prefixes are retargeted per host build; see host-classes.mjs. */
 
 /* ---------- workbench skins ---------- */
 
@@ -160,22 +160,23 @@ body[data-island-skin] .hIlkoa_sessionRow.hIlkoa_selected::after {
   animation: island-row-scan 3.8s ease-in-out infinite;
   pointer-events: none;
 }
+/* The card hosts the composer popovers (slash commands, mentions, attach menu):
+   they are absolutely positioned above the card, so this element must never clip
+   its children. The sweep is painted as a background layer instead. */
 body[data-island-skin] .RlGAzG_card {
-  overflow: hidden;
-  animation: island-composer-glow 3.8s ease-in-out infinite;
+  position: relative;
+  background-image: linear-gradient(100deg, transparent 42%, rgb(198 233 125 / .26) 50%, transparent 58%);
+  background-size: 240% 100%;
+  background-repeat: no-repeat;
+  background-position: 165% 0;
+  animation: island-composer-glow 3.8s ease-in-out infinite,
+    island-composer-sweep 5s ease-in-out infinite;
 }
-body[data-island-skin] .RlGAzG_card::after {
-  content: "";
-  position: absolute;
-  left: -35%;
-  top: 0;
-  bottom: 0;
-  width: 24%;
-  background: linear-gradient(90deg, transparent, rgb(198 233 125 / .3), transparent);
-  animation: island-composer-scan 5s ease-in-out infinite;
-  pointer-events: none;
+@keyframes island-composer-sweep {
+  0%, 30% { background-position: 165% 0; }
+  50% { background-position: 50% 0; }
+  80%, 100% { background-position: -65% 0; }
 }
-body[data-island-skin] .RlGAzG_card { position: relative; }
 
 @keyframes island-skin-halo { 50% { opacity: .55; transform: scale(1.1); } }
 @keyframes island-orbit-spin { to { transform: rotate(335deg); } }
@@ -185,11 +186,6 @@ body[data-island-skin] .RlGAzG_card { position: relative; }
   0%, 35% { left: -40%; opacity: 0; }
   45% { opacity: 1; }
   72%, 100% { left: 115%; opacity: 0; }
-}
-@keyframes island-composer-scan {
-  0%, 30% { left: -35%; opacity: 0; }
-  50% { opacity: .8; }
-  80%, 100% { left: 125%; opacity: 0; }
 }
 @keyframes island-composer-glow { 50% { border-color: #c8e694; } }
 
